@@ -1,1 +1,1 @@
-<img src="images/profile-picture.jpg" {{ $attributes }} />
+<img src="/images/profile-picture.jpg" {{ $attributes }} />
