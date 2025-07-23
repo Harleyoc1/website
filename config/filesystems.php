@@ -60,6 +60,11 @@ return [
             'report' => false,
         ],
 
+        'blog' => [
+            'driver' => 'local',
+            'root' => public_path() . '/blog'
+        ]
+
     ],
 
     /*
