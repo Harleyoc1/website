@@ -3,7 +3,6 @@
 namespace App\Livewire\Posts;
 
 use App\Models\Post;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Cell extends Component
@@ -17,8 +16,21 @@ class Cell extends Component
 
     public function delete(): void
     {
-        $this->post->deleteContent();
-        $this->post->delete();
+        if (!$this->post->deleteContent()) {
+            $this->error("Server error writing post content to file");
+            return;
+        }
+        $title = $this->post->title;
+        if (!$this->post->delete()) {
+            $this->error('Server error writing post to database');
+            return;
+        }
         $this->redirectRoute('management.blog.index');
+        session()->flash('success', "Post '$title' deleted");
+    }
+
+    private function error(string $message) {
+        $this->redirectRoute('management.blog.index');
+        session()->flash('error', $message);
     }
 }
