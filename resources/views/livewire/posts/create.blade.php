@@ -13,7 +13,7 @@
 
         <div class="flex items-center justify-start gap-2">
             <flux:button href="{{ route('management.blog.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
-            <flux:button variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Save') }}</flux:button>
+            <flux:button variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
         </div>
     </form>
 </div>
