@@ -16,11 +16,6 @@ class CreatePost extends Component
         'content' => ['required']
     ];
 
-    public function render()
-    {
-        return view('livewire.posts.create');
-    }
-
     public function store(): void
     {
         $this->validate();

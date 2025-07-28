@@ -30,11 +30,6 @@ class EditPost extends Component
         $this->content = $this->post->readContent() ?? "Unable to read content";
     }
 
-    public function render()
-    {
-        return view('livewire.posts.edit');
-    }
-
     public function update(): void
     {
         $rules = $this->rules;

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Post;
 
-use App\Livewire\Posts\Cell;
+use App\Livewire\Posts\PostCell;
 use App\Livewire\Posts\PostIndex;
 use App\Models\Post;
 use App\Models\User;
@@ -48,7 +48,7 @@ class PostIndexTest extends TestCase
     {
         $this->actingAs(User::factory()->create());
 
-        $this->get('/management/blog')->assertDontSeeLivewire(Cell::class);
+        $this->get('/management/blog')->assertDontSeeLivewire(PostCell::class);
     }
 
     public function test_page_contains_cell_component_when_posts(): void
@@ -56,7 +56,7 @@ class PostIndexTest extends TestCase
         $this->actingAs(User::factory()->create());
         Post::factory()->create();
 
-        $this->get('/management/blog')->assertSeeLivewire(Cell::class);
+        $this->get('/management/blog')->assertSeeLivewire(PostCell::class);
     }
 
     public function test_deletion_updates_view(): void
@@ -64,10 +64,10 @@ class PostIndexTest extends TestCase
         $this->actingAs(User::factory()->create());
         $post = Post::factory()->create();
 
-        Livewire::test(Cell::class, ['post' => $post])
+        Livewire::test(PostCell::class, ['post' => $post])
             ->call('delete');
 
-        Livewire::test(PostIndex::class)->assertDontSeeLivewire(Cell::class);
+        Livewire::test(PostIndex::class)->assertDontSeeLivewire(PostCell::class);
     }
 
 }

@@ -5,7 +5,7 @@ namespace App\Livewire\Posts;
 use App\Models\Post;
 use Livewire\Component;
 
-class Cell extends Component
+class PostCell extends Component
 {
     public Post $post;
 

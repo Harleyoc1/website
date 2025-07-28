@@ -9,10 +9,9 @@ class PostIndex extends Component
 {
     public $posts;
 
-    public function render()
+    public function mount(): void
     {
         $this->posts = Post::all();
-        return view('livewire.posts.index');
     }
 
 }

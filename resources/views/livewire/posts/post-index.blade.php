@@ -5,7 +5,7 @@
         </div>
         <div class="space-y-6">
             @foreach($posts as $post)
-                <livewire:posts.cell :post="$post" />
+                <livewire:posts.post-cell :post="$post" />
             @endforeach
         </div>
     </div>

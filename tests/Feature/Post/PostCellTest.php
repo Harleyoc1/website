@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Post;
 
-use App\Livewire\Posts\Cell;
+use App\Livewire\Posts\PostCell;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,7 +19,7 @@ class PostCellTest extends TestCase
         $this->actingAs(User::factory()->create());
         $post = Post::factory()->create();
 
-        Livewire::test(Cell::class, ['post' => $post])
+        Livewire::test(PostCell::class, ['post' => $post])
             ->call('delete');
 
         $this->assertDatabaseMissing('posts', ['id' => $post->id]);
@@ -31,7 +31,7 @@ class PostCellTest extends TestCase
         $post = Post::factory()->create();
         $post->writeContent('Some test content...');
 
-        Livewire::test(Cell::class, ['post' => $post])
+        Livewire::test(PostCell::class, ['post' => $post])
             ->call('delete');
 
         Storage::disk('blog')->assertMissing('1.md');
