@@ -18,23 +18,46 @@ class CreatePostTest extends TestCase
         $this->get('/management/blog/create')->assertRedirect('/login');
     }
 
-    public function test_authenticated_users_can_visit_the_page(): void
+    public function test_non_admin_users_cannot_access_the_page(): void
     {
         $this->actingAs(User::factory()->create());
+
+        $this->get('/management/blog/create')->assertStatus(403);
+    }
+
+    public function test_admin_users_can_visit_the_page(): void
+    {
+        $this->actingAs(User::factory()->admin()->create());
 
         $this->get('/management/blog/create')->assertStatus(200);
     }
 
     public function test_page_contains_livewire_component(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $this->get('/management/blog/create')->assertSeeLivewire(CreatePost::class);
     }
 
-    public function test_cannot_create_post_without_title(): void
+    public function test_guests_cannot_create_post(): void
+    {
+        Livewire::test(CreatePost::class)
+            ->call('store')
+            ->assertStatus(403);
+    }
+
+    public function test_non_admin_users_cannot_create_post(): void
     {
         $this->actingAs(User::factory()->create());
+
+        Livewire::test(CreatePost::class)
+            ->call('store')
+            ->assertStatus(403);
+    }
+
+    public function test_cannot_create_post_without_title(): void
+    {
+        $this->actingAs(User::factory()->admin()->create());
 
         $response = Livewire::test(CreatePost::class)
             ->set('slug', 'test-slug')
@@ -47,7 +70,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_without_slug(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -60,7 +83,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_with_used_slug(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -83,7 +106,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_without_summary(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -96,7 +119,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_without_content(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -110,7 +133,7 @@ class CreatePostTest extends TestCase
     public function test_post_creation_adds_database_row(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -131,7 +154,7 @@ class CreatePostTest extends TestCase
     public function test_redirects_on_successful_post_creation(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -148,7 +171,7 @@ class CreatePostTest extends TestCase
     public function test_post_content_is_written_to_disk(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')

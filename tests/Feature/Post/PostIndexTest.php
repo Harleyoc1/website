@@ -19,23 +19,30 @@ class PostIndexTest extends TestCase
         $this->get('/management/blog')->assertRedirect('/login');
     }
 
-    public function test_authenticated_users_can_visit_the_page(): void
+    public function test_non_admin_users_cannot_access_the_page(): void
     {
         $this->actingAs(User::factory()->create());
+
+        $this->get('/management/blog')->assertStatus(403);
+    }
+
+    public function test_admin_users_can_visit_the_page(): void
+    {
+        $this->actingAs(User::factory()->admin()->create());
 
         $this->get('/management/blog')->assertStatus(200);
     }
 
     public function test_page_contains_livewire_component(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $this->get('/management/blog')->assertSeeLivewire(PostIndex::class);
     }
 
     public function test_posts_passed_to_view(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         Post::factory()->count(3)->create();
 
         Livewire::test(PostIndex::class)
@@ -46,14 +53,14 @@ class PostIndexTest extends TestCase
 
     public function test_page_doesnt_contain_cell_component_when_no_posts(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $this->get('/management/blog')->assertDontSeeLivewire(PostCell::class);
     }
 
     public function test_page_contains_cell_component_when_posts(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         Post::factory()->create();
 
         $this->get('/management/blog')->assertSeeLivewire(PostCell::class);
@@ -61,7 +68,7 @@ class PostIndexTest extends TestCase
 
     public function test_deletion_updates_view(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
 
         Livewire::test(PostCell::class, ['post' => $post])

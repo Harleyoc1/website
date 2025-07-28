@@ -32,6 +32,7 @@ class EditPost extends Component
 
     public function update(): void
     {
+        $this->authorize('update', $this->post);
         $rules = $this->rules;
         // Ignore slug so we can update other details and keep it the same
         $rules['slug'] = ['required', 'max:255',

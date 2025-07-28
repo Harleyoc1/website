@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class DashboardTest extends TestCase
+class ManagementTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -15,10 +15,18 @@ class DashboardTest extends TestCase
         $this->get('/management')->assertRedirect('/login');
     }
 
-    public function test_authenticated_users_can_visit_the_dashboard(): void
+    public function test_non_admin_users_cannot_access_the_page(): void
     {
-        $this->actingAs($user = User::factory()->create());
+        $this->actingAs(User::factory()->create());
+
+        $this->get('/management')->assertStatus(403);
+    }
+
+    public function test_admin_users_can_visit_the_page(): void
+    {
+        $this->actingAs(User::factory()->admin()->create());
 
         $this->get('/management')->assertStatus(200);
     }
+
 }

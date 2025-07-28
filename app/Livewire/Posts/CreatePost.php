@@ -18,6 +18,7 @@ class CreatePost extends Component
 
     public function store(): void
     {
+        $this->authorize('create', Post::class);
         $this->validate();
         try {
             $post = Post::create([
