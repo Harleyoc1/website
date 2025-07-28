@@ -16,12 +16,19 @@ class EditPostTest extends TestCase
 
     public function test_guests_are_redirected_to_the_login_page(): void
     {
-        $this->get('/management/blog/edit/1')->assertRedirect('/login');
+        $this->get('/management/blog/edit/slug')->assertRedirect('/login');
     }
 
-    public function test_authenticated_users_can_visit_the_page(): void
+    public function test_non_admin_users_cannot_access_the_page(): void
     {
         $this->actingAs(User::factory()->create());
+
+        $this->get('/management/blog/edit/slug')->assertStatus(403);
+    }
+
+    public function test_admin_users_can_visit_the_page(): void
+    {
+        $this->actingAs(User::factory()->admin()->create());
         Post::factory()->create(['slug' => 'test-slug']);
 
         $this->get('/management/blog/edit/test-slug')->assertStatus(200);
@@ -29,22 +36,41 @@ class EditPostTest extends TestCase
 
     public function test_returns_not_found_when_post_doesnt_exist(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
 
         $this->get('/management/blog/edit/some-nonexistent-post')->assertStatus(404);
     }
 
     public function test_page_contains_livewire_component(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         Post::factory()->create(['slug' => 'test-slug']);
 
         $this->get('/management/blog/edit/test-slug')->assertSeeLivewire(EditPost::class);
     }
 
-    public function test_cannot_remove_title(): void
+    public function test_guests_cannot_edit_post(): void
+    {
+        $post = Post::factory()->create();
+
+        Livewire::test(EditPost::class, ['slug' => $post->slug])
+            ->call('update')
+            ->assertStatus(403);
+    }
+
+    public function test_non_admin_users_cannot_edit_post(): void
     {
         $this->actingAs(User::factory()->create());
+        $post = Post::factory()->create();
+
+        Livewire::test(EditPost::class, ['slug' => $post->slug])
+            ->call('update')
+            ->assertStatus(403);
+    }
+
+    public function test_cannot_remove_title(): void
+    {
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
 
         $response = Livewire::test(EditPost::class, ['slug' => $post->slug])
@@ -56,7 +82,7 @@ class EditPostTest extends TestCase
 
     public function test_cannot_remove_slug(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
 
         $response = Livewire::test(EditPost::class, ['slug' => $post->slug])
@@ -68,7 +94,7 @@ class EditPostTest extends TestCase
 
     public function test_cannot_take_another_posts_slug(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post1 = Post::factory()->create(['slug' => 'test-slug']);
         Post::factory()->create(['slug' => 'test-slug2']);
 
@@ -81,7 +107,7 @@ class EditPostTest extends TestCase
 
     public function test_can_change_other_properties_while_keeping_slug(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
 
         $response = Livewire::test(EditPost::class, ['slug' => $post->slug])
@@ -93,7 +119,7 @@ class EditPostTest extends TestCase
 
     public function test_cannot_remove_summary(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
 
         $response = Livewire::test(EditPost::class, ['slug' => $post->slug])
@@ -105,7 +131,7 @@ class EditPostTest extends TestCase
 
     public function test_cannot_remove_content(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
 
         $response = Livewire::test(EditPost::class, ['slug' => $post->slug])
@@ -118,7 +144,7 @@ class EditPostTest extends TestCase
     public function test_post_edit_modifies_database_row(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create([
             'title' => 'Test Title',
             'slug' => 'test-slug',
@@ -144,7 +170,7 @@ class EditPostTest extends TestCase
     public function test_redirects_on_successful_edit(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
 
         $response = Livewire::test(EditPost::class, ['slug' => $post->slug])
@@ -159,7 +185,7 @@ class EditPostTest extends TestCase
     public function test_modified_post_content_is_written_to_disk(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
         $post->writeContent('Some test content...');
 

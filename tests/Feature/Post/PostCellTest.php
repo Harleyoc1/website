@@ -14,9 +14,27 @@ class PostCellTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_delete_removes_database_row(): void
+    public function test_guests_cannot_delete_a_post(): void
     {
-        $this->actingAs(User::factory()->create());
+        $post = Post::factory()->create();
+
+        Livewire::test(PostCell::class, ['post' => $post])
+            ->call('delete')
+            ->assertStatus(403);
+    }
+
+    public function test_non_admin_users_cannot_delete_a_post(): void
+    {
+        $post = Post::factory()->create();
+
+        Livewire::test(PostCell::class, ['post' => $post])
+            ->call('delete')
+            ->assertStatus(403);
+    }
+
+    public function test_deleting_post_removes_the_database_row(): void
+    {
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
 
         Livewire::test(PostCell::class, ['post' => $post])
@@ -25,9 +43,9 @@ class PostCellTest extends TestCase
         $this->assertDatabaseMissing('posts', ['id' => $post->id]);
     }
 
-    public function test_delete_removes_content_file(): void
+    public function test_deleting_post_removes_content_file(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::factory()->admin()->create());
         $post = Post::factory()->create();
         $post->writeContent('Some test content...');
 

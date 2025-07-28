@@ -21,9 +21,9 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->realText(255),
-            'slug' => fake()->unique()->realText(255),
-            'summary' => fake()->realText(255)
+            'title' => fake()->realText(20),
+            'slug' => fake()->unique()->realText(20),
+            'summary' => fake()->realText(20)
         ];
     }
 
