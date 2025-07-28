@@ -21,6 +21,9 @@ class EditPost extends Component
     public function mount(string $slug): void
     {
         $this->post = Post::all()->where('slug', $slug)->first();
+        if (!isset($this->post)) {
+            abort(404);
+        }
         $this->title = $this->post->title;
         $this->slug = $this->post->slug;
         $this->summary = $this->post->summary;
@@ -32,7 +35,7 @@ class EditPost extends Component
         return view('livewire.posts.edit');
     }
 
-    public function store(): void
+    public function update(): void
     {
         $rules = $this->rules;
         // Ignore slug so we can update other details and keep it the same
