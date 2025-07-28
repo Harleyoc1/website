@@ -16,6 +16,7 @@ class PostCell extends Component
 
     public function delete(): void
     {
+        $this->authorize('delete', $this->post);
         if (!$this->post->deleteContent()) {
             $this->error("Server error writing post content to file");
             return;
