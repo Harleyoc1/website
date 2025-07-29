@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class CreatePost extends Component
 {
+
     public $title, $slug, $summary, $content;
 
     protected $rules = [
@@ -20,22 +21,19 @@ class CreatePost extends Component
     {
         $this->authorize('create', Post::class);
         $this->validate();
-        try {
-            $post = Post::create([
-                'title' => $this->title,
-                'slug' => $this->slug,
-                'summary' => $this->summary,
-            ]);
+        $post = Post::create([
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'summary' => $this->summary,
+        ]);
 
-            if (!$post->writeContent($this->content)) {
-                session()->flash('error', 'Server error writing post content to file');
-            } else {
-                session()->flash('success', 'Post created successfully');
-            }
-            $this->redirectRoute('management.blog.index');
-        } catch (\Throwable $th) {
-            session()->flash('error', 'Server error writing post to database');
+        if (!$post->writeContent($this->content)) {
+            session()->flash('error', 'Server error writing post content to file');
+        } else {
+            session()->flash('success', 'Post created successfully');
         }
+        $this->dispatch('uploadAttachments', 'blog', $post->getAttachmentsPath());
+        $this->redirectRoute('management.blog.index');
     }
 
 }

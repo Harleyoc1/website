@@ -16,4 +16,7 @@
             <flux:button variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Save') }}</flux:button>
         </div>
     </form>
+
+    <livewire:attachment-manager :subheading="__('Attachments are modified directly.')"
+                                 :attachment-writer="new \App\Attachments\DirectAttachmentWriter('blog', $post->getAttachmentsPath())"/>
 </div>
