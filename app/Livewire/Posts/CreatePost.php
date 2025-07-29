@@ -4,6 +4,7 @@ namespace App\Livewire\Posts;
 
 use App\Models\Post;
 use Livewire\Component;
+use Throwable;
 
 class CreatePost extends Component
 {
@@ -21,19 +22,23 @@ class CreatePost extends Component
     {
         $this->authorize('create', Post::class);
         $this->validate();
-        $post = Post::create([
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'summary' => $this->summary,
-        ]);
+        try {
+            $post = Post::create([
+                'title' => $this->title,
+                'slug' => $this->slug,
+                'summary' => $this->summary,
+            ]);
 
-        if (!$post->writeContent($this->content)) {
-            session()->flash('error', 'Server error writing post content to file');
-        } else {
-            session()->flash('success', 'Post created successfully');
+            if (!$post->writeContent($this->content)) {
+                session()->flash('error', 'Server error writing post content to file');
+            } else {
+                session()->flash('success', 'Post created successfully');
+            }
+            $this->dispatch('uploadAttachments', 'blog', $post->getAttachmentsPath());
+            $this->redirectRoute('management.blog.index');
+        } catch (Throwable $th) {
+            session()->flash('error', $th->getMessage());
         }
-        $this->dispatch('uploadAttachments', 'blog', $post->getAttachmentsPath());
-        $this->redirectRoute('management.blog.index');
     }
 
 }
