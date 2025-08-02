@@ -193,8 +193,8 @@ class EditPostTest extends TestCase
             ->set('content', 'Some modified test content...')
             ->call('update');
 
-        Storage::disk('blog')->assertExists('1.md');
-        $this->assertEquals('Some modified test content...', Storage::disk('blog')->get('1.md'));
+        Storage::disk('blog')->assertExists('1/content.md');
+        $this->assertEquals('Some modified test content...', Storage::disk('blog')->get('1/content.md'));
     }
 
 

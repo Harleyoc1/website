@@ -180,8 +180,8 @@ class CreatePostTest extends TestCase
             ->set('content', 'Some test content...')
             ->call('store');
 
-        Storage::disk('blog')->assertExists('1.md');
-        $this->assertEquals('Some test content...', Storage::disk('blog')->get('1.md'));
+        Storage::disk('blog')->assertExists('1/content.md');
+        $this->assertEquals('Some test content...', Storage::disk('blog')->get('1/content.md'));
     }
 
 
