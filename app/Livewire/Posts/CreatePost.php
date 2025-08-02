@@ -10,7 +10,7 @@ use Throwable;
 class CreatePost extends Component
 {
 
-    public $title, $slug, $summary, $content;
+    public $title, $slug, $summary, $content, $id;
 
     protected $rules = [
         'title' => ['required', 'max:255'],
@@ -18,6 +18,11 @@ class CreatePost extends Component
         'summary' => ['required'],
         'content' => ['required']
     ];
+
+    public function mount(): void
+    {
+        $this->id = Post::max('id') + 1;
+    }
 
     public function store(): void
     {

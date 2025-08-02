@@ -7,6 +7,9 @@
             <flux:heading>{{ $name }}</flux:heading>
         </div>
         <div class="flex gap-2">
+            <flux:button class="hover:cursor-pointer" onclick="copyToClipboard('{{ $path . $name  }}')">
+                {{ __('Copy Link') }}
+            </flux:button>
             <flux:modal.trigger name="{{ $editModalName }}">
                 <flux:button class="hover:cursor-pointer" x-on:click="$wire.showEditModal = true">
                     {{ __('Edit') }}

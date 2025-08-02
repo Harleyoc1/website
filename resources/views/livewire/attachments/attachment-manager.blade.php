@@ -4,7 +4,7 @@
 
     <div class="mt-6 mb-6 space-y-6">
         @foreach($attachmentNames as $name)
-            <livewire:attachments.attachment-cell :name="$name" :key="$name" />
+            <livewire:attachments.attachment-cell :name="$name" :key="$name" :path="$path"/>
         @endforeach
     </div>
 
@@ -37,6 +37,10 @@
             filenameField.value = filepath.split('\\').pop().split('/').pop();
             // Dispatch input event, as otherwise Livewire does not read the new value
             filenameField.dispatchEvent(new Event('input'));
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text.replaceAll(' ', '%20'));
         }
     </script>
 </div>

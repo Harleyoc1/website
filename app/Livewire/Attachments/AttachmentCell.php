@@ -10,7 +10,7 @@ class AttachmentCell extends Component
 {
     use WithFileUploads;
 
-    public $name, $newName, $file, $showEditModal;
+    public $name, $newName, $file, $path, $showEditModal;
 
     public function mount(string $name)
     {
