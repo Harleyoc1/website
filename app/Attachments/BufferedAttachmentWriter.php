@@ -2,12 +2,10 @@
 
 namespace App\Attachments;
 
-use Illuminate\Support\Facades\Storage;
-
 class BufferedAttachmentWriter implements AttachmentWriter
 {
 
-    private array $attachments = [];
+    private array $attachments;
 
     public function __construct(array $attachments = [])
     {
@@ -22,6 +20,22 @@ class BufferedAttachmentWriter implements AttachmentWriter
 
     public function edit(string $oldName, string $newName, $file): bool
     {
+        if (!isset($this->attachments[$oldName]) || isset($this->attachments[$newName])) {
+            return false;
+        }
+        if ($newName !== $oldName) {
+            unset($this->attachments[$oldName]);
+        }
+        $this->attachments[$newName] = $file;
+        return true;
+    }
+
+    public function rename(string $oldName, string $newName): bool
+    {
+        if (!isset($this->attachments[$oldName]) || isset($this->attachments[$newName])) {
+            return false;
+        }
+        $file = $this->attachments[$oldName];
         if ($newName !== $oldName) {
             unset($this->attachments[$oldName]);
         }
@@ -64,6 +78,5 @@ class BufferedAttachmentWriter implements AttachmentWriter
     {
         return new static($value);
     }
-
 
 }

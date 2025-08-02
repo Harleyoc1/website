@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Posts;
 
+use App\Livewire\Attachments\AttachmentManager;
 use App\Models\Post;
 use Livewire\Component;
 use Throwable;
@@ -34,7 +35,8 @@ class CreatePost extends Component
             } else {
                 session()->flash('success', 'Post created successfully');
             }
-            $this->dispatch('uploadAttachments', 'blog', $post->getAttachmentsPath());
+            $this->dispatch('uploadAttachments', 'blog', $post->getAttachmentsPath())
+                ->to(AttachmentManager::class);
             $this->redirectRoute('management.blog.index');
         } catch (Throwable $th) {
             session()->flash('error', $th->getMessage());

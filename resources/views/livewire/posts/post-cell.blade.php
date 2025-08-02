@@ -18,7 +18,7 @@
             </flux:modal.trigger>
 
             <flux:modal name="{{ $modalName }}" :show="$errors->isNotEmpty()" focusable class="max-w-lg">
-                <form wire:submit="delete({{ $post->id }})" class="space-y-6">
+                <form wire:submit="delete" class="space-y-6">
                     <flux:heading size="lg">{{ __('Are you sure you want to delete post \'' . $post->title . '\'?') }}</flux:heading>
 
                     <div class="flex justify-end space-x-2 rtl:space-x-reverse">

@@ -16,6 +16,6 @@
             <flux:button variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
         </div>
     </form>
-    <livewire:attachment-manager :subheading="__('Attachments are not saved until the blog post is added.')"
-                                 :attachment-writer="new \App\Attachments\BufferedAttachmentWriter()"/>
+    <livewire:attachments.attachment-manager :subheading="__('Attachments are not saved until the blog post is added.')"
+        :attachment-writer="new \App\Attachments\BufferedAttachmentWriter()"/>
 </div>

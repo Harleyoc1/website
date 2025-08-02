@@ -31,11 +31,12 @@ class DirectAttachmentWriter implements AttachmentWriter
 
     public function edit(string $oldName, string $newName, $file): bool
     {
+        if (!in_array($oldName, $this->attachmentNames) || in_array($newName, $this->attachmentNames)) {
+            return false;
+        }
         // If name changed, delete old file
         if ($newName !== $oldName) {
-            if (Storage::disk($this->disk)->delete("$this->path/$oldName")) {
-                $this->attachmentNames = array_diff($this->attachmentNames, [$oldName]);
-            } else {
+            if (!$this->remove($oldName)) {
                 return false;
             }
         }
@@ -49,19 +50,39 @@ class DirectAttachmentWriter implements AttachmentWriter
         return false;
     }
 
+    public function rename(string $oldName, string $newName): bool
+    {
+        if (!in_array($oldName, $this->attachmentNames) || in_array($newName, $this->attachmentNames)) {
+            return false;
+        }
+        if ($oldName == $newName) {
+            return true;
+        }
+        if (!Storage::disk($this->disk)->move("$this->path/$oldName", "$this->path/$newName")) {
+            return false;
+        }
+        $this->removeName($oldName);
+        $this->attachmentNames[] = $newName;
+        return true;
+    }
+
     public function remove(string $name): bool
     {
         if (Storage::disk($this->disk)->delete("$this->path/$name")) {
-            // Remove file from attachment names
-            $this->attachmentNames = array_diff($this->attachmentNames, [$name]);
+            $this->removeName($name);
             return true;
         }
         return false;
     }
 
+    private function removeName(string $name): void
+    {
+        $this->attachmentNames = array_diff($this->attachmentNames, [$name]);
+    }
+
     public function has(string $name): bool
     {
-        return in_array($name, $this->attachmentNames, true);
+        return in_array($name, $this->attachmentNames);
     }
 
     public function getNames(): array

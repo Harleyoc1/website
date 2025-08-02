@@ -17,6 +17,6 @@
         </div>
     </form>
 
-    <livewire:attachment-manager :subheading="__('Attachments are modified directly.')"
-                                 :attachment-writer="new \App\Attachments\DirectAttachmentWriter('blog', $post->getAttachmentsPath())"/>
+    <livewire:attachments.attachment-manager :subheading="__('Attachments are modified directly.')"
+        :attachment-writer="new \App\Attachments\DirectAttachmentWriter('blog', $post->getAttachmentsPath())"/>
 </div>
