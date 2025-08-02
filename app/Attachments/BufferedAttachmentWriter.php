@@ -14,16 +14,20 @@ class BufferedAttachmentWriter implements AttachmentWriter
 
     public function add(string $name, $file): bool
     {
+        if (isset($this->attachments[$name])) {
+            return false;
+        }
         $this->attachments[$name] = $file;
         return true;
     }
 
     public function edit(string $oldName, string $newName, $file): bool
     {
-        if (!isset($this->attachments[$oldName]) || isset($this->attachments[$newName])) {
+        $nameChanged = $newName !== $oldName;
+        if (!isset($this->attachments[$oldName]) || $nameChanged && isset($this->attachments[$newName])) {
             return false;
         }
-        if ($newName !== $oldName) {
+        if ($nameChanged) {
             unset($this->attachments[$oldName]);
         }
         $this->attachments[$newName] = $file;
@@ -32,11 +36,12 @@ class BufferedAttachmentWriter implements AttachmentWriter
 
     public function rename(string $oldName, string $newName): bool
     {
-        if (!isset($this->attachments[$oldName]) || isset($this->attachments[$newName])) {
+        $nameChanged = $newName !== $oldName;
+        if (!isset($this->attachments[$oldName]) || $nameChanged && isset($this->attachments[$newName])) {
             return false;
         }
         $file = $this->attachments[$oldName];
-        if ($newName !== $oldName) {
+        if ($nameChanged) {
             unset($this->attachments[$oldName]);
         }
         $this->attachments[$newName] = $file;
@@ -45,6 +50,9 @@ class BufferedAttachmentWriter implements AttachmentWriter
 
     public function remove(string $name): bool
     {
+        if (!isset($this->attachments[$name])) {
+            return false;
+        }
         unset($this->attachments[$name]);
         return true;
     }
@@ -62,7 +70,7 @@ class BufferedAttachmentWriter implements AttachmentWriter
     public function upload(string $disk, string $path): bool
     {
         foreach ($this->attachments as $name => $file) {
-            if (!$file->storeAs($path, $name, 'blog')) {
+            if (!$file->storeAs($path, $name, $disk)) {
                 return false;
             }
         }
