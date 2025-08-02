@@ -14,7 +14,7 @@ class BufferedAttachmentWriter implements AttachmentWriter
 
     public function add(string $name, $file): bool
     {
-        if (isset($this->attachments[$name])) {
+        if ($this->has($name)) {
             return false;
         }
         $this->attachments[$name] = $file;
@@ -24,7 +24,7 @@ class BufferedAttachmentWriter implements AttachmentWriter
     public function edit(string $oldName, string $newName, $file): bool
     {
         $nameChanged = $newName !== $oldName;
-        if (!isset($this->attachments[$oldName]) || $nameChanged && isset($this->attachments[$newName])) {
+        if (!$this->has($oldName) || $nameChanged && $this->has($newName)) {
             return false;
         }
         if ($nameChanged) {
@@ -37,7 +37,7 @@ class BufferedAttachmentWriter implements AttachmentWriter
     public function rename(string $oldName, string $newName): bool
     {
         $nameChanged = $newName !== $oldName;
-        if (!isset($this->attachments[$oldName]) || $nameChanged && isset($this->attachments[$newName])) {
+        if (!$this->has($oldName) || $nameChanged && $this->has($newName)) {
             return false;
         }
         $file = $this->attachments[$oldName];
@@ -50,7 +50,7 @@ class BufferedAttachmentWriter implements AttachmentWriter
 
     public function remove(string $name): bool
     {
-        if (!isset($this->attachments[$name])) {
+        if (!$this->has($name)) {
             return false;
         }
         unset($this->attachments[$name]);

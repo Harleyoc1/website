@@ -7,23 +7,25 @@ use Illuminate\Support\Facades\Storage;
 class DirectAttachmentWriter implements AttachmentWriter
 {
 
-    private string $disk;
-    private string $path;
-    private array $attachmentNames;
+    private string $disk, $path;
+    private array $attachmentNames = [];
 
     public function __construct(string $disk, string $path)
     {
         $this->disk = $disk;
         $this->path = $path;
-        $this->attachmentNames = array_map(function($filepath) {
-            return basename($filepath);
-        }, Storage::disk($disk)->files($this->path));
+        foreach (Storage::disk($disk)->files($this->path) as $file) {
+            $this->attachmentNames[basename($file)] = true;
+        }
     }
 
     public function add(string $name, $file): bool
     {
-        if ($file->storeAs($this->path, $name, 'blog')) {
-            $this->attachmentNames[] = $name;
+        if ($this->has($name)) {
+            return false;
+        }
+        if ($file->storeAs($this->path, $name, $this->disk)) {
+            $this->attachmentNames[$name] = true;
             return true;
         }
         return false;
@@ -31,19 +33,17 @@ class DirectAttachmentWriter implements AttachmentWriter
 
     public function edit(string $oldName, string $newName, $file): bool
     {
-        if (!in_array($oldName, $this->attachmentNames) || in_array($newName, $this->attachmentNames)) {
+        $nameChanged = $newName !== $oldName;
+        if (!$this->has($oldName) || $nameChanged && $this->has($newName)) {
             return false;
         }
-        // If name changed, delete old file
-        if ($newName !== $oldName) {
-            if (!$this->remove($oldName)) {
-                return false;
-            }
+        if ($nameChanged && !$this->remove($oldName)) {
+            return false;
         }
         // Store new file contents
-        if ($file->storeAs($this->path, $newName, 'blog')) {
+        if ($file->storeAs($this->path, $newName, $this->disk)) {
             if ($newName !== $oldName) {
-                $this->attachmentNames[] = $newName;
+                $this->attachmentNames[$newName] = true;
             }
             return true;
         }
@@ -52,42 +52,41 @@ class DirectAttachmentWriter implements AttachmentWriter
 
     public function rename(string $oldName, string $newName): bool
     {
-        if (!in_array($oldName, $this->attachmentNames) || in_array($newName, $this->attachmentNames)) {
+        $nameChanged = $newName !== $oldName;
+        if (!$this->has($oldName) || $nameChanged && $this->has($newName)) {
             return false;
         }
-        if ($oldName == $newName) {
+        if (!$nameChanged) {
             return true;
         }
         if (!Storage::disk($this->disk)->move("$this->path/$oldName", "$this->path/$newName")) {
             return false;
         }
-        $this->removeName($oldName);
-        $this->attachmentNames[] = $newName;
+        unset($this->attachmentNames[$oldName]);
+        $this->attachmentNames[$newName] = true;
         return true;
     }
 
     public function remove(string $name): bool
     {
+        if (!$this->has($name)) {
+            return false;
+        }
         if (Storage::disk($this->disk)->delete("$this->path/$name")) {
-            $this->removeName($name);
+            unset($this->attachmentNames[$name]);
             return true;
         }
         return false;
     }
 
-    private function removeName(string $name): void
-    {
-        $this->attachmentNames = array_diff($this->attachmentNames, [$name]);
-    }
-
     public function has(string $name): bool
     {
-        return in_array($name, $this->attachmentNames);
+        return isset($this->attachmentNames[$name]);
     }
 
     public function getNames(): array
     {
-        return $this->attachmentNames;
+        return array_keys($this->attachmentNames);
     }
 
     public function upload(string $disk, string $path): bool

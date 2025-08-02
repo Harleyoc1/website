@@ -61,6 +61,18 @@ class BufferedAttachmentWriterTest extends TestCase
         $this->assertEquals('the new contents', $attachments['file0.txt']);
     }
 
+    public function test_edit_attachment_updates_name(): void
+    {
+        $writer = $this->createTestingWriter(1);
+
+        $result = $writer->edit('file0.txt', 'file1.txt', '');
+
+        $this->assertTrue($result);
+        $attachments = $this->getAttachments($writer);
+        $this->assertCount(1, $attachments);
+        $this->assertArrayHasKey('file1.txt', $attachments);
+    }
+
     public function test_edit_attachment_updates_contents_and_name(): void
     {
         $writer = $this->createTestingWriter(1);
@@ -72,18 +84,6 @@ class BufferedAttachmentWriterTest extends TestCase
         $this->assertCount(1, $attachments);
         $this->assertArrayHasKey('file1.txt', $attachments);
         $this->assertEquals('the new contents', $attachments['file1.txt']);
-    }
-
-    public function test_edit_attachment_updates_name(): void
-    {
-        $writer = $this->createTestingWriter(1);
-
-        $result = $writer->edit('file0.txt', 'file1.txt', '');
-
-        $this->assertTrue($result);
-        $attachments = $this->getAttachments($writer);
-        $this->assertCount(1, $attachments);
-        $this->assertArrayHasKey('file1.txt', $attachments);
     }
 
     public function test_edit_attachment_returns_false_if_name_not_found(): void
@@ -105,6 +105,8 @@ class BufferedAttachmentWriterTest extends TestCase
         // Quick check for side effects
         $attachments = $this->getAttachments($writer);
         $this->assertCount(2, $attachments);
+        $this->assertEquals('file contents 0', $attachments['file0.txt']);
+        $this->assertEquals('file contents 1', $attachments['file1.txt']);
     }
 
     public function test_rename_attachment(): void
