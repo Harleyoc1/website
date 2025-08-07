@@ -1,9 +1,9 @@
 <article class="flex border-b pb-4 justify-between">
     <div>
-         <h3 class="text-lg font-semibold">
+         <h3 class="text-lg font-semibold dark:text-zinc-100">
             <a href="" class="hover:underline">{{ $post->title }}</a>
         </h3>
-        <p class="text-gray-600">{{ $post->summary }}</p>
+        <p class="text-gray-600 dark:text-zinc-300">{{ $post->summary }}</p>
     </div>
     <div class="flex items-center justify-center flex-col-reverse">
         <div class="flex gap-2">

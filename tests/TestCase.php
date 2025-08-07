@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use ReflectionClass;
 use ReflectionException;
@@ -19,5 +20,17 @@ abstract class TestCase extends BaseTestCase
         } catch (ReflectionException $e) {
             throw new RuntimeException($e->getMessage());
         }
+    }
+
+    protected function actingAsUser(): TestCase
+    {
+        $this->actingAs(User::factory()->create());
+        return $this;
+    }
+
+    protected function actingAsAdmin(): TestCase
+    {
+        $this->actingAs(User::factory()->admin()->create());
+        return $this;
     }
 }

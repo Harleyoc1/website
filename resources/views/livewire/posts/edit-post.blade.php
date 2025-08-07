@@ -1,7 +1,7 @@
 <div>
     <flux:heading size="xl">Edit blog post</flux:heading>
 
-    <form wire:submit="store" class="my-6 w-full space-y-6">
+    <form wire:submit="update" class="my-6 w-full space-y-6">
 
         <flux:input wire:model="title" :label="__('Title')" type="text" autofocus />
 

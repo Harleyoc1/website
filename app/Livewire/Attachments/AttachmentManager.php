@@ -13,9 +13,9 @@ class AttachmentManager extends Component
     public $subheading, $path, $attachmentNames, $attachmentName, $attachment, $attachmentWriter;
 
     protected $listeners = [
-        'uploadAttachments' => 'upload',
         'editAttachment' => 'edit',
-        'deleteAttachment' => 'delete'
+        'deleteAttachment' => 'delete',
+        'uploadAttachments' => 'upload'
     ];
 
     public function mount(): void

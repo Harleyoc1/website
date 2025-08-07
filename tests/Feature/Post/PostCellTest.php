@@ -4,7 +4,6 @@ namespace Tests\Feature\Post;
 
 use App\Livewire\Posts\PostCell;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -34,7 +33,7 @@ class PostCellTest extends TestCase
 
     public function test_deleting_post_removes_the_database_row(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
         $post = Post::factory()->create();
 
         Livewire::test(PostCell::class, ['post' => $post])
@@ -45,7 +44,7 @@ class PostCellTest extends TestCase
 
     public function test_deleting_post_removes_content_file(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
         $post = Post::factory()->create();
         $post->writeContent('Some test content...');
 

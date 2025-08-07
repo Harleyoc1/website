@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Post;
 
+use App\Livewire\Attachments\AttachmentManager;
 use App\Livewire\Posts\CreatePost;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -20,21 +20,21 @@ class CreatePostTest extends TestCase
 
     public function test_non_admin_users_cannot_access_the_page(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         $this->get('/management/blog/create')->assertStatus(403);
     }
 
     public function test_admin_users_can_visit_the_page(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $this->get('/management/blog/create')->assertStatus(200);
     }
 
     public function test_page_contains_livewire_component(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $this->get('/management/blog/create')->assertSeeLivewire(CreatePost::class);
     }
@@ -48,7 +48,7 @@ class CreatePostTest extends TestCase
 
     public function test_non_admin_users_cannot_create_post(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAsUser();
 
         Livewire::test(CreatePost::class)
             ->call('store')
@@ -57,7 +57,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_without_title(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $response = Livewire::test(CreatePost::class)
             ->set('slug', 'test-slug')
@@ -70,7 +70,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_without_slug(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -83,7 +83,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_with_used_slug(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -106,7 +106,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_without_summary(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -119,7 +119,7 @@ class CreatePostTest extends TestCase
 
     public function test_cannot_create_post_without_content(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -133,7 +133,7 @@ class CreatePostTest extends TestCase
     public function test_post_creation_adds_database_row(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -154,7 +154,7 @@ class CreatePostTest extends TestCase
     public function test_redirects_on_successful_post_creation(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         $response = Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -171,7 +171,7 @@ class CreatePostTest extends TestCase
     public function test_post_content_is_written_to_disk(): void
     {
         Storage::fake('blog');
-        $this->actingAs(User::factory()->admin()->create());
+        $this->actingAsAdmin();
 
         Livewire::test(CreatePost::class)
             ->set('title', 'Test Title')
@@ -184,5 +184,23 @@ class CreatePostTest extends TestCase
         $this->assertEquals('Some test content...', Storage::disk('blog')->get('1/content.md'));
     }
 
+    public function test_page_contains_attachment_manager(): void
+    {
+        $this->actingAsAdmin()->get('/management/blog/create')->assertSeeLivewire(AttachmentManager::class);
+    }
+
+    public function test_attachment_upload_event_dispatched_on_store(): void
+    {
+        Storage::fake('blog');
+        $this->actingAsAdmin();
+
+        Livewire::test(CreatePost::class)
+            ->set('title', 'Test Title')
+            ->set('slug', 'test-slug')
+            ->set('summary', 'Test summary')
+            ->set('content', 'Some test content...')
+            ->call('store')
+            ->assertDispatched('uploadAttachments', 'blog', '1/attachments');
+    }
 
 }
