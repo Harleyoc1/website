@@ -10,7 +10,11 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'summary'];
+    protected $fillable = [
+        'title',
+        'slug',
+        'summary'
+    ];
 
     public function getAttachmentsPath(): string
     {
