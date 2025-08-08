@@ -26,7 +26,7 @@ class AttachmentManager extends Component
     public function add(): void
     {
         if ($this->attachmentWriter->has($this->attachmentName)) {
-            session()->flash('error', 'Attachment already exists');
+            $this->addError('attachmentName', 'Name is taken');
             return;
         }
         $this->attachmentWriter->add($this->attachmentName, $this->attachment);
@@ -38,7 +38,7 @@ class AttachmentManager extends Component
     public function edit(string $oldName, string $newName, string|null $serializedFile): void
     {
         if (!$this->attachmentWriter->has($oldName)) {
-            session()->flash('error', "Could not find attachment '$oldName'.'");
+            session()->flash('error', "Could not find attachment '$oldName'");
             return;
         }
         if ($serializedFile) {
