@@ -15,12 +15,13 @@ class CreateProject extends Component
     public $title, $slug, $tools, $summary, $coverImage, $coverImageFilename, $repoLink, $standout;
 
     protected $rules = [
-        'title' => 'required|max:255',
-        'slug' => 'required|unique:projects|max:255',
-        'tools' => 'required|max:255',
-        'coverImage' => 'image|max:1024',
-        'summary' => 'required|max:255',
-        'repoLink' => 'required|max:255|url'
+        'title' => ['required', 'max:255'],
+        'slug' => ['required', 'unique:projects', 'max:255'],
+        'tools' => ['required', 'max:255'],
+        'coverImage' => ['required', 'image', 'max:1024'],
+        'coverImageFilename' => ['required', 'string', 'max:255'],
+        'summary' => ['required', 'max:255'],
+        'repoLink' => ['required', 'max:255', 'url']
     ];
 
     public function store(): void
