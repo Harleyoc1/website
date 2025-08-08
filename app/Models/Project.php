@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class Project extends Model
 {
+    use HasFactory;
 
     private static string $PORTFOLIO = 'portfolio';
     private static string $COVER_IMAGES = 'cover-images';
@@ -54,7 +57,7 @@ class Project extends Model
         return Storage::disk(self::$PORTFOLIO)->delete(self::$COVER_IMAGES . '/' . $this->cover_img_filename);
     }
 
-    public static function writeCoverImage(string $filename, TemporaryUploadedFile $file): bool
+    public static function writeCoverImage(string $filename, UploadedFile $file): bool
     {
         return is_string($file->storeAs(self::$COVER_IMAGES, $filename, self::$PORTFOLIO));
     }
