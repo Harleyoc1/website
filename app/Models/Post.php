@@ -12,9 +12,14 @@ class Post extends Model
 
     protected $fillable = ['title', 'slug', 'summary'];
 
+    public function getAttachmentsPath(): string
+    {
+        return "$this->id/attachments";
+    }
+
     private function getContentPath(): string
     {
-        return $this->id . ".md";
+        return "$this->id/content.md";
     }
 
     public function readContent(): string|null

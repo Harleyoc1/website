@@ -17,16 +17,12 @@ class ManagementTest extends TestCase
 
     public function test_non_admin_users_cannot_access_the_page(): void
     {
-        $this->actingAs(User::factory()->create());
-
-        $this->get('/management')->assertStatus(403);
+        $this->actingAsUser()->get('/management')->assertStatus(403);
     }
 
     public function test_admin_users_can_visit_the_page(): void
     {
-        $this->actingAs(User::factory()->admin()->create());
-
-        $this->get('/management')->assertStatus(200);
+        $this->actingAsAdmin()->get('/management')->assertStatus(200);
     }
 
 }

@@ -1,9 +1,9 @@
 <article class="flex border-b pb-4 justify-between">
     <div>
-         <h3 class="text-lg font-semibold">
+         <h3 class="text-lg font-semibold dark:text-zinc-100">
             <a href="" class="hover:underline">{{ $post->title }}</a>
         </h3>
-        <p class="text-gray-600">{{ $post->summary }}</p>
+        <p class="text-gray-600 dark:text-zinc-300">{{ $post->summary }}</p>
     </div>
     <div class="flex items-center justify-center flex-col-reverse">
         <div class="flex gap-2">
@@ -18,7 +18,7 @@
             </flux:modal.trigger>
 
             <flux:modal name="{{ $modalName }}" :show="$errors->isNotEmpty()" focusable class="max-w-lg">
-                <form wire:submit="delete({{ $post->id }})" class="space-y-6">
+                <form wire:submit="delete" class="space-y-6">
                     <flux:heading size="lg">{{ __('Are you sure you want to delete post \'' . $post->title . '\'?') }}</flux:heading>
 
                     <div class="flex justify-end space-x-2 rtl:space-x-reverse">
