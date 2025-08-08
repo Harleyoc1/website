@@ -63,7 +63,12 @@ return [
         'blog' => [
             'driver' => 'local',
             'root' => public_path() . '/blog'
-        ]
+        ],
+
+        'portfolio' => [
+            'driver' => 'local',
+            'root' => public_path() . '/portfolio'
+        ],
 
     ],
 

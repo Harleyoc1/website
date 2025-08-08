@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('tools');
-            $table->string('cover_img_path');
             $table->text('summary');
+            $table->string('cover_img_filename');
             $table->string('repo_link');
             $table->boolean('standout');
             $table->timestamps();

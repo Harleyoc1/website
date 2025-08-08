@@ -18,19 +18,20 @@ class PostCell extends Component
     {
         $this->authorize('delete', $this->post);
         if (!$this->post->deleteContent()) {
-            $this->error("Server error writing post content to file");
+            $this->error("Server error deleting post content");
             return;
         }
         $title = $this->post->title;
         if (!$this->post->delete()) {
-            $this->error('Server error writing post to database');
+            $this->error('Server error deleting post from database');
             return;
         }
         $this->redirectRoute('management.blog.index');
         session()->flash('success', "Post '$title' deleted");
     }
 
-    private function error(string $message) {
+    private function error(string $message): void
+    {
         $this->redirectRoute('management.blog.index');
         session()->flash('error', $message);
     }
