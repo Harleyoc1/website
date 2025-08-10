@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Projects;
 
-use App\Livewire\Attachments\AttachmentManager;
 use App\Livewire\Projects\CreateProject;
+use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -177,6 +177,18 @@ class CreateProjectTest extends TestCase
             ->set('coverImage', UploadedFile::fake()->image('test-img.png'))
             ->set('summary', 'Test summary')
             ->set('repoLink', 'https://test.link/')
+            ->call('store');
+
+        $response->assertHasErrors('coverImageFilename');
+    }
+
+    public function test_cannot_create_project_with_used_cover_image_filename(): void
+    {
+        $this->actingAsAdmin();
+        Project::factory()->create(['cover_img_filename' => 'test-img.png', 'slug' => 'test-slug']);
+
+        $response = Livewire::test(CreateProject::class)
+            ->set('coverImageFilename', 'test-img.png')
             ->call('store');
 
         $response->assertHasErrors('coverImageFilename');

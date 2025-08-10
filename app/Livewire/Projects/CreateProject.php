@@ -12,14 +12,16 @@ class CreateProject extends Component
 {
     use WithFileUploads;
 
-    public $title, $slug, $tools, $summary, $coverImage, $coverImageFilename, $repoLink, $standout;
+    public string $title, $slug, $tools, $summary, $coverImageFilename, $repoLink;
+    public $coverImage;
+    public bool $standout;
 
     protected $rules = [
         'title' => ['required', 'max:255'],
         'slug' => ['required', 'unique:projects', 'max:255'],
         'tools' => ['required', 'max:255'],
         'coverImage' => ['required', 'image', 'max:1024'],
-        'coverImageFilename' => ['required', 'string', 'max:255'],
+        'coverImageFilename' => ['required', 'unique:projects,cover_img_filename', 'max:255'],
         'summary' => ['required', 'max:255'],
         'repoLink' => ['required', 'max:255', 'url']
     ];

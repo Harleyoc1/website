@@ -23,7 +23,7 @@ class ProjectFactory extends Factory
             'title' => fake()->realText(20),
             'slug' => fake()->realText(20),
             'tools' => fake()->realText(20),
-            'cover_img_filename' => fake()->realText(20),
+            'cover_img_filename' => fake()->realText(20) . '.png',
             'summary' => fake()->realText(20),
             'repo_link' => fake()->url(),
             'standout' => fake()->boolean()

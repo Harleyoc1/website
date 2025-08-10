@@ -92,7 +92,7 @@ class EditPostTest extends TestCase
         $response->assertHasErrors('slug');
     }
 
-    public function test_cannot_take_another_posts_slug(): void
+    public function test_cannot_take_used_slug(): void
     {
         $this->actingAsAdmin();
         $post1 = Post::factory()->create(['slug' => 'test-slug']);

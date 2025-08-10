@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -13,24 +14,28 @@ class EditProject extends Component
 {
     use WithFileUploads;
 
-    public $project, $title, $slug, $tools, $summary, $coverImage, $coverImageFilename, $repoLink, $standout;
+    public Project $project;
+    public string $title, $slug, $tools, $summary, $coverImageFilename, $repoLink;
+    public $coverImage;
+    public bool $standout;
 
     protected $rules = [
         'title' => ['required', 'max:255'],
         'slug' => ['required', 'unique:projects', 'max:255'],
         'tools' => ['required', 'max:255'],
         'coverImage' => ['nullable', 'image', 'max:1024'],
-        'coverImageFilename' => ['required', 'string', 'max:255'],
+        'coverImageFilename' => ['required', 'unique:projects,cover_img_filename', 'max:255'],
         'summary' => ['required', 'max:255'],
         'repoLink' => ['required', 'max:255', 'url']
     ];
 
     public function mount(string $slug): void
     {
-        $this->project = Project::all()->where('slug', $slug)->first();
-        if (!isset($this->project)) {
+        $project = Project::all()->where('slug', $slug)->first();
+        if (!isset($project)) {
             abort(404);
         }
+        $this->project = $project;
         $this->title = $this->project->title;
         $this->slug = $this->project->slug;
         $this->tools = $this->project->tools;
@@ -70,6 +75,11 @@ class EditProject extends Component
             'required',
             'max:255',
             Rule::unique('projects', 'slug')->ignore($this->project->id)
+        ];
+        $rules['coverImageFilename'] = [
+            'required',
+            'max:255',
+            Rule::unique('projects', 'cover_img_filename')->ignore($this->project->id)
         ];
         return $rules;
     }

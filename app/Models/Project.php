@@ -41,7 +41,7 @@ class Project extends Model
                     self::$COVER_IMAGES . '/' . $this->cover_img_filename
                 );
             }
-            $success = !$nameChanged || $success && $file->storeAs(self::$COVER_IMAGES, $filename, self::$PORTFOLIO);
+            $success = (!$nameChanged || $success) && $file->storeAs(self::$COVER_IMAGES, $filename, self::$PORTFOLIO);
         } else if ($nameChanged) {
             // If new name but file not set, rename the file
             $success = Storage::disk(self::$PORTFOLIO)->move(
