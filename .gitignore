@@ -3,6 +3,8 @@
 /public/build
 /public/hot
 /public/storage
+/public/blog
+/public/portfolio
 /storage/*.key
 /storage/pail
 /vendor
