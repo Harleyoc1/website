@@ -33,11 +33,7 @@ class EditPost extends Component
     public function update(): void
     {
         $this->authorize('update', $this->post);
-        $rules = $this->rules;
-        // Ignore slug so we can update other details and keep it the same
-        $rules['slug'] = ['required', 'max:255',
-            Rule::unique('posts', 'slug')->ignore($this->post->id)];
-        $this->validate($rules);
+        $this->validate($this->rules());
         try {
             $this->post->update([
                 'title' => $this->title,
@@ -54,6 +50,17 @@ class EditPost extends Component
         } catch (Throwable $th) {
             session()->flash('error', 'Server error writing post to database');
         }
+    }
+
+    private function rules()
+    {
+        $rules = $this->rules;
+        $rules['slug'] = [
+            'required',
+            'max:255',
+            Rule::unique('posts', 'slug')->ignore($this->post->id)
+        ];
+        return $rules;
     }
 
 }

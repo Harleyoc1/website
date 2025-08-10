@@ -44,6 +44,7 @@ class PostCellTest extends TestCase
 
     public function test_deleting_post_removes_content_file(): void
     {
+        Storage::fake('blog');
         $this->actingAsAdmin();
         $post = Post::factory()->create();
         $post->writeContent('Some test content...');
