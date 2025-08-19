@@ -8,10 +8,10 @@
             </div>
             <flux:heading level="1" size="xl" class="font-mono font-bold! text-6xl lg:text-7xl">Harley <span
                     class="font-light tracking-tighter">O'Connor</span></flux:heading>
-            <flux:text size="xl" class="mt-4 lg:mt-6 text-lg lg:text-xl! text-zinc-600">A computer science graduate currently seeking work in the technology
+            <flux:text size="xl" class="mt-4 lg:mt-6 text-lg lg:text-xl! text-zinc-600 dark:text-zinc-300">A computer science graduate currently seeking work in the technology
                 sector, in Software Engineering or related roles.
             </flux:text>
-            <li class="list-none mt-3 lg:mt-5 text-zinc-700">
+            <li class="list-none mt-3 lg:mt-5 text-zinc-700 dark:text-zinc-200">
                 <ul>
                     <span class="inline-flex">
                         <flux:icon.arrow-turn-down-right class="mr-3" variant="solid"/>
@@ -27,7 +27,10 @@
                 </ul>
             </li>
             <div class="flex gap-3 mt-4 items-center">
-                <a href="https://github.com/Harleyoc1" target="_blank"><img src="/images/brands/github-mark.png" alt="GitHub Icon" class="h-6" /></a>
+                <a href="https://github.com/Harleyoc1" target="_blank">
+                    <img src="/images/brands/github-mark.png" alt="GitHub Icon" class="h-6 dark:hidden" />
+                    <img src="/images/brands/github-mark-white.png" alt="GitHub Icon" class="h-6 hidden dark:block" />
+                </a>
                 <a href="https://linkedin.com/in/harleyoconnor/" target="_blank"><img src="/images/brands/LI-In-Bug.png" alt="LinkedIn Icon" class="h-6" /></a>
             </div>
             <div class="flex justify-center items-end h-full lg:hidden">
