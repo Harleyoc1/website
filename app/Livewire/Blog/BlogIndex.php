@@ -5,13 +5,13 @@ namespace App\Livewire\Blog;
 use App\Models\Post;
 use Livewire\Component;
 
-class Index extends Component
+class BlogIndex extends Component
 {
     public $posts;
 
     public function render()
     {
-        return view('livewire.blog.index')->layout('components.layouts.public.page');
+        return view('livewire.blog.blog-index')->layout('components.layouts.public.page');
     }
 
     public function mount()
