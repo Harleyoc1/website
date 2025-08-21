@@ -27,7 +27,7 @@ class Project extends Model
 
     public function getCoverImagePath(): string
     {
-        return '/portfolio/' . self::$COVER_IMAGES . '/' . $this->cover_img_filename;
+        return '/portfolio-data/' . self::$COVER_IMAGES . '/' . $this->cover_img_filename;
     }
 
     public function updateCoverImage(string $filename, TemporaryUploadedFile|null $file): bool

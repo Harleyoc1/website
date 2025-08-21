@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\IsAdminMiddleware;
+use App\Livewire\Blog\BlogIndex;
 use App\Livewire\Posts\CreatePost;
 use App\Livewire\Posts\EditPost;
 use App\Livewire\Posts\PostIndex;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
+Route::get('blog', BlogIndex::class)->name('blog.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

@@ -22,7 +22,7 @@
                 <ul class="mt-2">
                     <span class="inline-flex">
                         <flux:icon.arrow-turn-down-right class="mr-3" variant="solid"/>
-                        <span>Read my <a href="#" class="inline-flex items-center text-accent"> <span class="underline">Blog</span> <flux:icon.arrow-up-right class="size-5 ml-1"/></a></span>
+                        <span>Read my <a href="{{ route('blog.index') }}" class="inline-flex items-center text-accent"> <span class="underline">Blog</span> <flux:icon.arrow-up-right class="size-5 ml-1"/></a></span>
                     </span>
                 </ul>
             </li>
