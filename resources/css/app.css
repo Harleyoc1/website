@@ -87,3 +87,16 @@ select:focus[data-flux-control] {
 .w-128 {
     width: calc(var(--spacing) * 128);
 }
+
+#content {
+    h1 {
+        margin-top: calc(var(--spacing) * 2);
+        font-size: var(--text-xl);
+        font-weight: var(--font-weight-bold);
+    }
+
+    ul {
+        list-style-type: disc;
+        list-style-position: inside;
+    }
+}
