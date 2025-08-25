@@ -85,48 +85,4 @@ class ShowBlogTest extends TestCase
         $this->get('/blog/test-slug')->assertSeeHtml('id="admin-panel"');
     }
 
-    public function test_guests_cannot_delete_a_post(): void
-    {
-        Post::factory()->create(['slug' => 'test-slug']);
-
-        Livewire::test(ShowPost::class, ['slug' => 'test-slug'])
-            ->call('delete')
-            ->assertStatus(403);
-    }
-
-    public function test_non_admin_users_cannot_delete_a_post(): void
-    {
-        Post::factory()->create(['slug' => 'test-slug']);
-
-        Livewire::test(ShowPost::class, ['slug' => 'test-slug'])
-            ->call('delete')
-            ->assertStatus(403);
-    }
-
-    public function test_deleting_post_removes_the_database_row(): void
-    {
-        $this->actingAsAdmin();
-        $post = Post::factory()->create(['slug' => 'test-slug']);
-
-        Livewire::test(ShowPost::class, ['slug' => 'test-slug'])
-            ->call('delete');
-
-        $this->assertDatabaseMissing('posts', ['id' => $post->id]);
-    }
-
-    public function test_deleting_post_removes_content_files(): void
-    {
-        Storage::fake('blog');
-        $this->actingAsAdmin();
-        $post = Post::factory()->create(['slug' => 'test-slug']);
-        $post->writeContent('Some test content...');
-
-        Livewire::test(ShowPost::class, ['slug' => 'test-slug'])
-            ->call('delete');
-
-        Storage::disk('blog')->assertMissing('1/content.md');
-        Storage::disk('blog')->assertMissing('1/content.html');
-    }
-
-
 }

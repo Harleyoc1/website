@@ -167,21 +167,6 @@ class EditPostTest extends TestCase
         ]);
     }
 
-    public function test_redirects_on_successful_edit(): void
-    {
-        Storage::fake('blog');
-        $this->actingAsAdmin();
-        $post = Post::factory()->create();
-
-        $response = Livewire::test(EditPost::class, ['slug' => $post->slug])
-            ->set('content', 'Some test content...')
-            ->call('update');
-
-        $response
-            ->assertHasNoErrors()
-            ->assertRedirect(route('management.blog.index', absolute: false));
-    }
-
     public function test_modified_post_content_is_written_to_disk(): void
     {
         Storage::fake('blog');

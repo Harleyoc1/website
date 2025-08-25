@@ -8,7 +8,7 @@
             <div class="flex gap-1">
                 <flux:button iconLeading="eye-slash" class="h-5 text-sm" onclick="hideAdminPanel()">Hide</flux:button>
                 <flux:button iconLeading="pencil" class="h-5 text-sm" href="{{ route('management.blog.edit', $post->slug) }}">Edit</flux:button>
-                <flux:button iconLeading="trash" title="Delete" variant="danger" wire:click="delete" wire:confirm="Are you sure you want to delete this post?">Delete</flux:button>
+                <livewire:posts.delete-post-button :post="$post" redirect-to="blog.index"/>
             </div>
             <script>
                 function hideAdminPanel() {

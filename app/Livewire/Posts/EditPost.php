@@ -46,7 +46,6 @@ class EditPost extends Component
             } else {
                 session()->flash('success', 'Post edited successfully');
             }
-            $this->redirectRoute('management.blog.index');
         } catch (Throwable $th) {
             session()->flash('error', 'Server error writing post to database');
         }

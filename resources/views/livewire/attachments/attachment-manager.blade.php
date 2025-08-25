@@ -9,12 +9,12 @@
     </div>
 
     <form wire:submit="add" class="flex gap-4">
-        <flux:input wire:model="attachment" :label="__('File')" type="file" onchange="attachmentSelected(this.value)"
-                    class="w-1/3" required/>
+        <flux:input wire:model="attachment" iconLeading="paper-clip" :label="__('File')" type="file"
+                    onchange="attachmentSelected(this.value)" class="w-1/3" required/>
         <flux:input wire:model="attachmentName" :label="__('Name')" type="text" id="filename" class="w-1/3"
                     required/>
         <div class="flex flex-col justify-end">
-            <flux:button variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
+            <flux:button iconLeading="plus" variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
         </div>
     </form>
 

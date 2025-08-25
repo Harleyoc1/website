@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Post;
 
+use App\Livewire\Posts\DeletePostButton;
 use App\Livewire\Posts\PostCell;
 use App\Livewire\Posts\PostIndex;
 use App\Models\Post;
@@ -70,7 +71,7 @@ class PostIndexTest extends TestCase
         $this->actingAsAdmin();
         $post = Post::factory()->create();
 
-        Livewire::test(PostCell::class, ['post' => $post])
+        Livewire::test(DeletePostButton::class, ['post' => $post, 'redirectTo' => 'management.blog.index'])
             ->call('delete');
 
         Livewire::test(PostIndex::class)->assertDontSeeLivewire(PostCell::class);

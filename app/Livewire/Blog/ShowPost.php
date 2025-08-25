@@ -21,18 +21,4 @@ class ShowPost extends Component
             abort(404);
         }
     }
-
-    public function delete(): void
-    {
-        $this->authorize('delete', $this->post);
-        if (!$this->post->deleteContent()) {
-            session()->flash('error', 'Server error deleting post content');
-            return;
-        }
-        if (!$this->post->delete()) {
-            session()->flash('error', 'Server error deleting post from database');
-            return;
-        }
-        $this->redirectRoute('blog.index');
-    }
 }

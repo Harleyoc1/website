@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Post;
 
-use App\Livewire\Posts\PostCell;
+use App\Livewire\Posts\DeletePostButton;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class PostCellTest extends TestCase
+class DeletePostButtonTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -17,7 +17,7 @@ class PostCellTest extends TestCase
     {
         $post = Post::factory()->create();
 
-        Livewire::test(PostCell::class, ['post' => $post])
+        Livewire::test(DeletePostButton::class, ['post' => $post])
             ->call('delete')
             ->assertStatus(403);
     }
@@ -26,7 +26,7 @@ class PostCellTest extends TestCase
     {
         $post = Post::factory()->create();
 
-        Livewire::test(PostCell::class, ['post' => $post])
+        Livewire::test(DeletePostButton::class, ['post' => $post])
             ->call('delete')
             ->assertStatus(403);
     }
@@ -36,7 +36,7 @@ class PostCellTest extends TestCase
         $this->actingAsAdmin();
         $post = Post::factory()->create();
 
-        Livewire::test(PostCell::class, ['post' => $post])
+        Livewire::test(DeletePostButton::class, ['post' => $post, 'redirectTo' => 'management.blog.index'])
             ->call('delete');
 
         $this->assertDatabaseMissing('posts', ['id' => $post->id]);
@@ -49,11 +49,20 @@ class PostCellTest extends TestCase
         $post = Post::factory()->create();
         $post->writeContent('Some test content...');
 
-        Livewire::test(PostCell::class, ['post' => $post])
+        Livewire::test(DeletePostButton::class, ['post' => $post, 'redirectTo' => 'management.blog.index'])
             ->call('delete');
 
         Storage::disk('blog')->assertMissing('1/content.md');
         Storage::disk('blog')->assertMissing('1/content.html');
     }
 
+    public function test_deleting_post_redirects(): void
+    {
+        $this->actingAsAdmin();
+        $post = Post::factory()->create();
+
+        Livewire::test(DeletePostButton::class, ['post' => $post, 'redirectTo' => 'management.blog.index'])
+            ->call('delete')
+            ->assertRedirect(route('management.blog.index'));
+    }
 }
