@@ -8,7 +8,7 @@
     <div class="flex items-center justify-center flex-col-reverse">
         <div class="flex gap-2">
             @php($modalName = 'confirm-post-' . $post->id . '-deletion')
-            <flux:button href="#" class="hover:cursor-pointer">View</flux:button>
+            <flux:button href="{{ route('blog.show', $post->slug) }}" class="hover:cursor-pointer">View</flux:button>
             <flux:button href="{{ route('management.blog.edit', $post->slug) }}" class="hover:cursor-pointer">Edit</flux:button>
 
             <flux:modal.trigger name="{{ $modalName }}">

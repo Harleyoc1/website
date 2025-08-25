@@ -1,19 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+namespace Feature\Blog;
 
 use App\Livewire\Blog\BlogIndex;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class BlogTest extends TestCase
+class BlogIndexTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_returns_a_successful_response(): void
     {
-        $this->get('/blog')->assertStatus(200);
+        $this->get('/blog')->assertSuccessful();
     }
 
     public function test_contains_blog_livewire_component(): void
@@ -39,5 +39,24 @@ class BlogTest extends TestCase
             ->assertSee('Test title')
             ->assertSee('Published on ' . $post->created_at->format('j F Y'))
             ->assertSee('Test summary');
+    }
+
+    public function test_guests_cannot_see_admin_panel(): void
+    {
+        $this->get('/blog')->assertDontSeeHtml('id="admin-panel"');
+    }
+
+    public function test_non_admin_users_cannot_see_admin_panel(): void
+    {
+        $this->actingAsUser();
+
+        $this->get('/blog')->assertDontSeeHtml('id="admin-panel"');
+    }
+
+    public function test_admins_can_see_admin_panel(): void
+    {
+        $this->actingAsAdmin();
+
+        $this->get('/blog')->assertSeeHtml('id="admin-panel"');
     }
 }

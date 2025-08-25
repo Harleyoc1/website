@@ -42,7 +42,7 @@ class PostCellTest extends TestCase
         $this->assertDatabaseMissing('posts', ['id' => $post->id]);
     }
 
-    public function test_deleting_post_removes_content_file(): void
+    public function test_deleting_post_removes_content_files(): void
     {
         Storage::fake('blog');
         $this->actingAsAdmin();
@@ -52,7 +52,8 @@ class PostCellTest extends TestCase
         Livewire::test(PostCell::class, ['post' => $post])
             ->call('delete');
 
-        Storage::disk('blog')->assertMissing('1.md');
+        Storage::disk('blog')->assertMissing('1/content.md');
+        Storage::disk('blog')->assertMissing('1/content.html');
     }
 
 }

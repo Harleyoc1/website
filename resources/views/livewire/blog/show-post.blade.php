@@ -7,8 +7,8 @@
             <flux:subheading size="sm" class="text-zinc-400 uppercase">Admin</flux:subheading>
             <div class="flex gap-1">
                 <flux:button iconLeading="eye-slash" class="h-5 text-sm" onclick="hideAdminPanel()">Hide</flux:button>
-                <flux:button iconLeading="pencil" class="h-5 text-sm" href="{{ route('management.blog.index') }}">Edit</flux:button>
-                <flux:button iconLeading="plus" class="h-5 text-sm" href="{{ route('management.blog.create') }}">Add</flux:button>
+                <flux:button iconLeading="pencil" class="h-5 text-sm" href="{{ route('management.blog.edit', $post->slug) }}">Edit</flux:button>
+                <flux:button iconLeading="trash" title="Delete" variant="danger" wire:click="delete" wire:confirm="Are you sure you want to delete this post?">Delete</flux:button>
             </div>
             <script>
                 function hideAdminPanel() {
@@ -17,13 +17,12 @@
             </script>
         </div>
         @endisAdmin
-        <flux:heading size="xl" class="pb-4">Blog</flux:heading>
-        @foreach($posts as $post)
-            <article class="px-2 py-3 border-b border-b-divider">
-                <flux:heading class="text-xl mb-0.5!"><a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></flux:heading>
-                <flux:subheading size="sm">Published on {{ $post->created_at->format('j F Y') }}</flux:subheading>
-                <flux:subheading size="md" class="mt-1.5 text-zinc-700 dark:text-zinc-50">{{ $post->summary }}</flux:subheading>
-            </article>
-        @endforeach
+
+        <flux:heading class="text-4xl! font-bold!">{{ $post->title }}</flux:heading>
+        <flux:subheading size="md" class="mb-3">Published on {{ $post->created_at->format('j F Y') }}</flux:subheading>
+        <hr class="border-divider mb-3" />
+        <div id="blog-body-container">
+            {!! $post->readAsHtml() !!}
+        </div>
     </div>
 </div>
