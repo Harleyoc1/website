@@ -60,7 +60,11 @@ class Post extends Model
     {
         $path = $this->getContentPathHtml();
         if (!Storage::disk('blog')->exists($path)) {
-            $html = $this->convertToHtml($this->readContent());
+            $content = $this->readContent();
+            if (!$content) {
+                return null;
+            }
+            $html = $this->convertToHtml($content);
             Storage::disk('blog')->put($path, $html);
             return $html;
         }
