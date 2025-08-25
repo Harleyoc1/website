@@ -59,6 +59,32 @@ class ShowBlogTest extends TestCase
         $this->get('/blog/test-slug')->assertSee('Some test content which we can hopefully see...');
     }
 
+    public function test_guests_cannot_see_admin_panel(): void
+    {
+        Storage::fake('blog');
+        Post::factory()->create(['slug' => 'test-slug']);
+
+        $this->get('/blog/test-slug')->assertDontSeeHtml('id="admin-panel"');
+    }
+
+    public function test_non_admin_users_cannot_see_admin_panel(): void
+    {
+        $this->actingAsUser();
+        Storage::fake('blog');
+        Post::factory()->create(['slug' => 'test-slug']);
+
+        $this->get('/blog/test-slug')->assertDontSeeHtml('id="admin-panel"');
+    }
+
+    public function test_admins_can_see_admin_panel(): void
+    {
+        $this->actingAsAdmin();
+        Storage::fake('blog');
+        Post::factory()->create(['slug' => 'test-slug']);
+
+        $this->get('/blog/test-slug')->assertSeeHtml('id="admin-panel"');
+    }
+
     public function test_guests_cannot_delete_a_post(): void
     {
         Post::factory()->create(['slug' => 'test-slug']);
