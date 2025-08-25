@@ -13,7 +13,7 @@
                 <flux:navbar.item class="[&>div>svg]:size-5" icon="folder-git-2" href="#" :label="__('Portfolio')">
                     {{ __('Portfolio') }}
                 </flux:navbar.item>
-                <flux:navbar.item class="[&>div>svg]:size-5" icon="book-open-text" href="{{ route('blog.index') }}" :current="request()->routeIs('blog.index')" :label="__('Blog')">
+                <flux:navbar.item class="[&>div>svg]:size-5" icon="book-open-text" href="{{ route('blog.index') }}" :current="request()->routeIs('blog.*')" :label="__('Blog')">
                     {{ __('Blog') }}
                 </flux:navbar.item>
             </flux:navbar>
