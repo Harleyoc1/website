@@ -25,7 +25,7 @@
 
     <livewire:attachments.attachment-manager :subheading="__('Attachments are modified directly.')"
         :attachment-writer="new \App\Attachments\DirectAttachmentWriter('blog', $post->getAttachmentsPath())"
-        :path="'/blog/' . $post->id . '/attachments/'"/>
+        :path="'/blog-data/' . $post->id . '/attachments/'"/>
 
     <div class="flex flex-col items-center">
         @if (session()->has('success'))

@@ -2,7 +2,7 @@
     <flux:heading size="xl">{{ __('Manage attachments') }}</flux:heading>
     <flux:subheading class="mt-2">{{ $subheading ?? '' }}</flux:subheading>
 
-    <div class="mt-6 mb-6 space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 mt-6 mb-6 space-y-6">
         @foreach($attachmentNames as $name)
             <livewire:attachments.attachment-cell :name="$name" :key="$name" :path="$path"/>
         @endforeach
