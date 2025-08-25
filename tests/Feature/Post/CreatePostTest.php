@@ -184,6 +184,22 @@ class CreatePostTest extends TestCase
         $this->assertEquals('Some test content...', Storage::disk('blog')->get('1/content.md'));
     }
 
+    public function test_post_content_html_is_written_to_disk(): void
+    {
+        Storage::fake('blog');
+        $this->actingAsAdmin();
+
+        Livewire::test(CreatePost::class)
+            ->set('title', 'Test Title')
+            ->set('slug', 'test-slug')
+            ->set('summary', 'Test summary')
+            ->set('content', 'Some test content...')
+            ->call('store');
+
+        Storage::disk('blog')->assertExists('1/content.html');
+        $this->assertEquals('<p>Some test content...</p>', Storage::disk('blog')->get('1/content.html'));
+    }
+
     public function test_page_contains_attachment_manager(): void
     {
         $this->actingAsAdmin()->get('/management/blog/create')->assertSeeLivewire(AttachmentManager::class);

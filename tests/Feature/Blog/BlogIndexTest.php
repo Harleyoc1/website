@@ -1,19 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+namespace Feature\Blog;
 
 use App\Livewire\Blog\BlogIndex;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class BlogTest extends TestCase
+class BlogIndexTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_returns_a_successful_response(): void
     {
-        $this->get('/blog')->assertStatus(200);
+        $this->get('/blog')->assertSuccessful();
     }
 
     public function test_contains_blog_livewire_component(): void

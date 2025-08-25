@@ -197,6 +197,21 @@ class EditPostTest extends TestCase
         $this->assertEquals('Some modified test content...', Storage::disk('blog')->get('1/content.md'));
     }
 
+    public function test_modified_post_content_html_is_written_to_disk(): void
+    {
+        Storage::fake('blog');
+        $this->actingAsAdmin();
+        $post = Post::factory()->create();
+        $post->writeContent('Some test content...');
+
+        Livewire::test(EditPost::class, ['slug' => $post->slug])
+            ->set('content', 'Some modified test content...')
+            ->call('update');
+
+        Storage::disk('blog')->assertExists('1/content.html');
+        $this->assertEquals('<p>Some modified test content...</p>', Storage::disk('blog')->get('1/content.html'));
+    }
+
     public function test_page_contains_attachment_manager(): void
     {
         $this->actingAsAdmin()->get('/management/blog/create')->assertSeeLivewire(AttachmentManager::class);
