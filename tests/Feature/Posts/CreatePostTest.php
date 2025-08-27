@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Post;
+namespace Tests\Feature\Posts;
 
 use App\Livewire\Attachments\AttachmentManager;
 use App\Livewire\Posts\CreatePost;

@@ -7,7 +7,6 @@
     </div>
     <div class="flex items-center justify-center flex-col-reverse">
         <div class="flex gap-2">
-            @php($modalName = 'confirm-post-' . $post->id . '-deletion')
             <flux:button iconLeading="eye" title="View" href="{{ route('blog.show', $post->slug) }}" class="hover:cursor-pointer" />
             <flux:button iconLeading="pencil" title="Edit" href="{{ route('management.blog.edit', $post->slug) }}" class="hover:cursor-pointer" />
             <livewire:posts.delete-post-button :post="$post" redirect-to="management.blog.index" :text="false"/>

@@ -11,9 +11,9 @@
 
         <flux:textarea wire:model="content" :label="__('Content')" />
 
-        <div class="flex items-center justify-start gap-2">
-            <flux:button href="{{ route('management.blog.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
-            <flux:button variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
+        <div class="flex items-center justify-between gap-2">
+            <flux:button iconLeading="arrow-left" href="{{ route('management.blog.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
+            <flux:button iconLeading="plus" variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
         </div>
     </form>
     <livewire:attachments.attachment-manager :subheading="__('Attachments are not saved until the blog post is added.')"

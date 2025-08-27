@@ -13,7 +13,7 @@
             <form wire:submit="edit" class="space-y-6">
                 <flux:heading size="lg">{{ __("Edit $name") }}</flux:heading>
 
-                <flux:input wire:model="file" :label="__('File')" type="file"/>
+                <flux:input wire:model="file" iconLeading="paper-clip" :label="__('File')" type="file"/>
                 <flux:input wire:model="newName" value="{{ $name }}" :label="__('Name')" type="text" required/>
 
                 <div class="flex justify-end space-x-2 rtl:space-x-reverse">

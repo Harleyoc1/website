@@ -1,6 +1,6 @@
 <div>
     <div>
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center justify-between gap-2 mb-4">
             <flux:heading size="xl">Manage projects</flux:heading>
             <div class="flex gap-2">
                 <flux:button iconLeading="eye" href="#" class="hover:cursor-pointer">View</flux:button>

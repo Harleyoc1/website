@@ -13,7 +13,7 @@
 
         <div class="flex items-center justify-between">
             <div class="flex gap-2">
-                <flux:button iconLeading="arrow-left" href="{{ route('management.blog.index') }}" class="hover:cursor-pointer">{{ __('Back') }}</flux:button>
+                <flux:button iconLeading="arrow-left" href="{{ route('management.blog.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
                 <flux:button iconLeading="eye" href="{{ route('blog.show', $post->slug) }}" class="hover:cursor-pointer">{{ __('View') }}</flux:button>
             </div>
             <div class="flex gap-2">

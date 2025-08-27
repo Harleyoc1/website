@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Post;
+namespace Feature\Posts;
 
 use App\Livewire\Attachments\AttachmentManager;
 use App\Livewire\Posts\EditPost;
