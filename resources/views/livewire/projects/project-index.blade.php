@@ -1,8 +1,11 @@
 <div>
     <div>
         <div class="flex items-center justify-between mb-4">
-            <flux:heading size="xl">Projects</flux:heading>
-            <flux:button href="{{ route('management.portfolio.create') }}" class="hover:cursor-pointer">Add</flux:button>
+            <flux:heading size="xl">Manage projects</flux:heading>
+            <div class="flex gap-2">
+                <flux:button iconLeading="eye" href="#" class="hover:cursor-pointer">View</flux:button>
+                <flux:button iconLeading="plus" variant="primary" href="{{ route('management.portfolio.create') }}" class="hover:cursor-pointer">Add</flux:button>
+            </div>
         </div>
         <div class="space-y-6">
             @foreach($projects as $project)

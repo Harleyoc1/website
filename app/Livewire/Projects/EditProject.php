@@ -60,10 +60,9 @@ class EditProject extends Component
                 'repo_link' => $this->repoLink,
                 'standout' => $this->standout
             ]);
-            $this->redirectRoute('management.portfolio.index');
+            session()->flash('success', 'Project edited successfully');
         } catch (Throwable $th) {
             Log::error($th->getMessage());
-            $this->redirectRoute('management.portfolio.index');
             session()->flash('error', $th->getMessage());
         }
     }

@@ -22,9 +22,9 @@
 
         <flux:checkbox wire:model="standout" :label="__('Standout?')" />
 
-        <div class="flex items-center justify-start gap-2">
-            <flux:button href="{{ route('management.portfolio.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
-            <flux:button variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
+        <div class="flex items-center justify-between gap-2">
+            <flux:button iconLeading="arrow-left" href="{{ route('management.portfolio.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
+            <flux:button iconLeading="plus" variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
         </div>
     </form>
 

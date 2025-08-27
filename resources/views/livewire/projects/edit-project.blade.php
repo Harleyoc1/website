@@ -12,7 +12,7 @@
         <flux:input wire:model="summary" :label="__('Summary')" type="text" />
 
         <div class="flex gap-4">
-            <flux:input wire:model="coverImage" :label="__('Cover Image')" type="file" onchange="attachmentSelected(this.value)" />
+            <flux:input wire:model="coverImage" iconLeading="paper-clip" :label="__('Cover Image')" type="file" onchange="attachmentSelected(this.value)" />
             <div class="grow">
                 <flux:input wire:model="coverImageFilename" id="filenameInput" :label="__('Filename')" type="text" />
             </div>
@@ -24,11 +24,29 @@
 
         <flux:checkbox wire:model="standout" :label="__('Standout?')" />
 
-        <div class="flex items-center justify-start gap-2">
-            <flux:button href="{{ route('management.portfolio.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
-            <flux:button variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Save') }}</flux:button>
+        <div class="flex items-center justify-between gap-2">
+            <div class="flex gap-2">
+                <flux:button iconLeading="arrow-left" href="{{ route('management.portfolio.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
+                <flux:button iconLeading="eye" href="#" class="hover:cursor-pointer">{{ __('View') }}</flux:button>
+            </div>
+            <div class="flex gap-2">
+                <flux:button iconLeading="bookmark" variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Save') }}</flux:button>
+                <livewire:projects.delete-project-button :project="$project" redirect-to="management.portfolio.index"/>
+            </div>
         </div>
     </form>
+
+    <div class="flex flex-col items-center">
+        @if (session()->has('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @elseif(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
 
     <script>
         let filenameField = document.getElementById('filenameInput');

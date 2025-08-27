@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Projects;
 
+use App\Livewire\Projects\DeleteProjectButton;
 use App\Livewire\Projects\ProjectCell;
 use App\Livewire\Projects\ProjectIndex;
 use App\Models\Project;
@@ -70,7 +71,7 @@ class ProjectIndexTest extends TestCase
         $this->actingAsAdmin();
         $project = Project::factory()->create();
 
-        Livewire::test(ProjectCell::class, ['project' => $project])
+        Livewire::test(DeleteProjectButton::class, ['project' => $project, 'redirectTo' => 'management.portfolio.index'])
             ->call('delete');
 
         Livewire::test(ProjectIndex::class)->assertDontSeeLivewire(ProjectCell::class);

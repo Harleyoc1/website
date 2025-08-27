@@ -250,20 +250,6 @@ class EditProjectTest extends TestCase
         ]);
     }
 
-    public function test_redirects_on_successful_project_creation(): void
-    {
-        $this->actingAsAdmin();
-        $project = Project::factory()->create();
-
-        $response = Livewire::test(EditProject::class, ['slug' => $project->slug])
-            ->set('title', 'New title')
-            ->call('update');
-
-        $response
-            ->assertHasNoErrors()
-            ->assertRedirect(route('management.portfolio.index', absolute: false));
-    }
-
     public function test_cover_image_is_written_to_disk(): void
     {
         Storage::fake('portfolio');
