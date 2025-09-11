@@ -10,7 +10,7 @@
             <flux:spacer />
 
             <flux:navbar class="me-1.5 space-x-0.5 rtl:space-x-reverse py-0!">
-                <flux:navbar.item class="[&>div>svg]:size-5" icon="folder-git-2" href="#" :label="__('Portfolio')">
+                <flux:navbar.item class="[&>div>svg]:size-5" icon="folder-git-2" href="{{ route('portfolio.index') }}" :current="request()->routeIs('portfolio.*')" :label="__('Portfolio')">
                     {{ __('Portfolio') }}
                 </flux:navbar.item>
                 <flux:navbar.item class="[&>div>svg]:size-5" icon="book-open-text" href="{{ route('blog.index') }}" :current="request()->routeIs('blog.*')" :label="__('Blog')">

@@ -27,7 +27,7 @@
         <div class="flex items-center justify-between gap-2">
             <div class="flex gap-2">
                 <flux:button iconLeading="arrow-left" href="{{ route('management.portfolio.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>
-                <flux:button iconLeading="eye" href="#" class="hover:cursor-pointer">{{ __('View') }}</flux:button>
+                <flux:button iconLeading="eye" href="{{ route('portfolio.index') }}" class="hover:cursor-pointer">{{ __('View') }}</flux:button>
             </div>
             <div class="flex gap-2">
                 <flux:button iconLeading="bookmark" variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Save') }}</flux:button>

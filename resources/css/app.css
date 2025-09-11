@@ -167,3 +167,11 @@ select:focus[data-flux-control] {
         font-size: var(--text-sm);
     }
 }
+
+.masonry-sizer, .project {
+    width: 33.3333%;
+}
+
+.standout {
+    width: 66.666%;
+}
