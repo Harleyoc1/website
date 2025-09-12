@@ -17,6 +17,6 @@ class PortfolioIndex extends Component
     public function mount(): void
     {
         // Collect the project, ordered with most recent first
-        $this->projects = Project::all()->sortByDesc(['standout', 'created_at']);
+        $this->projects = Project::all()->sortBy('order_index');
     }
 }

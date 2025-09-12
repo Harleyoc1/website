@@ -1,4 +1,4 @@
-<article class="flex border-b pb-4 gap-2 justify-between">
+<article class="flex border-b border-b-divider pb-4 gap-2 justify-between" project-id="{{ $project->id }}">
     <div class="flex gap-4">
         <img src="{{ $project->getCoverImagePath() }}" alt="Cover image" class="h-20 drop-shadow-xl" />
         <div class="flex justify-center flex-col">
@@ -9,7 +9,8 @@
         </div>
     </div>
     <div class="flex items-center justify-center flex-col-reverse">
-        <div class="flex gap-2">
+        <div class="flex gap-2 items-center">
+            <flux:icon icon="bars-3" class="mr-2 handle hover:cursor-pointer"></flux:icon>
             <flux:button iconLeading="pencil" href="{{ route('management.portfolio.edit', $project->slug) }}" class="hover:cursor-pointer"/>
             <livewire:projects.delete-project-button :project="$project" redirect-to="management.portfolio.index" :text="false"/>
         </div>

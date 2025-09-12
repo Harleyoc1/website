@@ -1,4 +1,4 @@
-<article class="flex border-b pb-4 justify-between">
+<article class="flex border-b border-b-divider pb-4 justify-between">
     <div>
          <h3 class="text-lg font-semibold dark:text-zinc-100">
             <a href="{{ route('blog.show', $post->slug) }}" class="hover:underline">{{ $post->title }}</a>
