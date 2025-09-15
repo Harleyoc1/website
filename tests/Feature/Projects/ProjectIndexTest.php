@@ -77,4 +77,18 @@ class ProjectIndexTest extends TestCase
         Livewire::test(ProjectIndex::class)->assertDontSeeLivewire(ProjectCell::class);
     }
 
+    public function test_update_to_ordering(): void
+    {
+        $this->actingAsAdmin();
+        Project::factory()->create(['title' => 'Test title 1']);
+        Project::factory()->create(['title' => 'Test title 2']);
+        Project::factory()->create(['title' => 'Test title 3']);
+
+        Livewire::test(ProjectIndex::class)
+            ->dispatch('update-project-order', [2, 3, 1]);
+
+        Livewire::test(ProjectIndex::class)
+            ->assertSeeInOrder(['Test title 2', 'Test title 3', 'Test title 1']);
+    }
+
 }
