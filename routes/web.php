@@ -3,6 +3,7 @@
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Livewire\Blog\BlogIndex;
 use App\Livewire\Blog\ShowPost;
+use App\Livewire\Portfolio\PortfolioIndex;
 use App\Livewire\Posts\CreatePost;
 use App\Livewire\Posts\EditPost;
 use App\Livewire\Posts\PostIndex;
@@ -20,6 +21,8 @@ Route::get('/', function () {
 
 Route::get('blog', BlogIndex::class)->name('blog.index');
 Route::get('blog/{slug}', ShowPost::class)->name('blog.show');
+
+Route::get('portfolio', PortfolioIndex::class)->name('portfolio.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
