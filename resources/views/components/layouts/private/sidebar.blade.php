@@ -10,7 +10,7 @@
             <flux:brand href="{{ route('home') }}" logo="/images/profile-picture.jpg" name="Harley O'Connor" />
 
             <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
+                <flux:navlist.group :heading="__('Public Site')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="folder-git-2" :href="route('management.portfolio.index')" :current="request()->routeIs('management.portfolio.*')" wire:navigate>{{ __('Portfolio') }}</flux:navlist.item>
                     <flux:navlist.item icon="book-open-text" :href="route('management.blog.index')" :current="request()->routeIs('management.blog.*')" wire:navigate>{{ __('Blog') }}</flux:navlist.item>
@@ -20,12 +20,8 @@
             <flux:spacer />
 
             <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
+                <flux:navlist.item icon="user-circle" :href="route('management.users.index')" :current="request()->routeIs('management.users.index')" wire:navigate>
+                    {{ __('Users') }}
                 </flux:navlist.item>
             </flux:navlist>
 
