@@ -7,8 +7,16 @@
     </div>
     <div class="mt-4">
         @foreach($users as $user)
-            <livewire:users.user-cell :user="$user"/>
+            <livewire:users.user-cell :user="$user" wire:key="user-cell-{{ $user->id }}"/>
         @endforeach
+    </div>
+    <!-- Temporarily show token on page for testing, since we cannot see email -->
+    <div class="mt-6 flex flex-col items-center">
+        @if (session()->has('token'))
+            <div class="alert alert-success">
+                Token: {{ session('token') }}
+            </div>
+        @endif
     </div>
     <flux:modal name="addUser" wire:model.self="showAddUserModel" focusable class="max-w-2xl">
         <form wire:submit="add" class="space-y-6">
