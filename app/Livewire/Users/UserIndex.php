@@ -4,7 +4,9 @@ namespace App\Livewire\Users;
 
 use App\Auth\Registration\Registrant;
 use App\Auth\Registration\RegistrationTokenRepository;
+use App\Mail\Registration;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class UserIndex extends Component
@@ -27,9 +29,9 @@ class UserIndex extends Component
 
         $token = RegistrationTokenRepository::get()->create(new Registrant($this->newUserEmail, $this->newUserIsAdmin));
 
-        // TODO: send the email
+        Mail::to($this->newUserEmail)->send(new Registration($this->newUserEmail, $token));
 
-        session()->flash('token', $token);
+        session()->flash('success');
 
         // Close modal and reset fields
         $this->modal('addUser')->close();
