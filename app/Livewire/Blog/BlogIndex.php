@@ -3,16 +3,13 @@
 namespace App\Livewire\Blog;
 
 use App\Models\Post;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('components.layouts.public.page')]
 class BlogIndex extends Component
 {
     public $posts;
-
-    public function render()
-    {
-        return view('livewire.blog.blog-index')->layout('components.layouts.public.page');
-    }
 
     public function mount()
     {

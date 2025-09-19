@@ -7,13 +7,12 @@ use Illuminate\Support\Facades\Storage;
 class DirectAttachmentWriter implements AttachmentWriter
 {
 
-    private string $disk, $path;
     private array $attachmentNames = [];
 
-    public function __construct(string $disk, string $path)
-    {
-        $this->disk = $disk;
-        $this->path = $path;
+    public function __construct(
+        private string $disk,
+        private string $path
+    ) {
         foreach (Storage::disk($disk)->files($this->path) as $file) {
             $this->attachmentNames[basename($file)] = true;
         }

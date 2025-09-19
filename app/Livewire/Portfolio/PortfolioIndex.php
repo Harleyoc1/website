@@ -3,16 +3,13 @@
 namespace App\Livewire\Portfolio;
 
 use App\Models\Project;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('components.layouts.public.page')]
 class PortfolioIndex extends Component
 {
     public $projects;
-
-    public function render()
-    {
-        return view('livewire.portfolio.portfolio-index')->layout('components.layouts.public.page');
-    }
 
     public function mount(): void
     {

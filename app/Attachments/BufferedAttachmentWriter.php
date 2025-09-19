@@ -5,11 +5,8 @@ namespace App\Attachments;
 class BufferedAttachmentWriter implements AttachmentWriter
 {
 
-    private array $attachments;
-
-    public function __construct(array $attachments = [])
+    public function __construct(private array $attachments = [])
     {
-        $this->attachments = $attachments;
     }
 
     public function add(string $name, $file): bool
