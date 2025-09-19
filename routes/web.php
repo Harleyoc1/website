@@ -13,6 +13,7 @@ use App\Livewire\Projects\ProjectIndex;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Livewire\Users\UserIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('management/blog', PostIndex::class)->name('management.blog.index');
         Route::get('management/blog/create', CreatePost::class)->name('management.blog.create');
         Route::get('management/blog/edit/{slug}', EditPost::class)->name('management.blog.edit');
+        Route::get('management/users', UserIndex::class)->name('management.users.index');
     });
 });
 
