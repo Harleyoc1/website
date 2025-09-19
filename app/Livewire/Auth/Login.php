@@ -11,8 +11,9 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use function Livewire\Volt\layout;
 
-#[Layout('components.layouts.auth')]
+#[Layout('components.layouts.auth', ['title' => 'Login'])]
 class Login extends Component
 {
     #[Validate('required|string|email')]
