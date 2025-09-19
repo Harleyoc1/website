@@ -16,7 +16,7 @@ class UserCell extends Component
         $this->isAdmin = $user->is_admin;
     }
 
-    public function toggleIsAdmin(): void
+    public function updateIsAdmin(): void
     {
         $this->authorize('update', $this->user);
         $this->user->is_admin = $this->isAdmin;

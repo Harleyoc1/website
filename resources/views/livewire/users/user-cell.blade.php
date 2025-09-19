@@ -4,7 +4,7 @@
         <flux:text class="text-zinc-600 dark:text-zinc-400">{{ $user->email }}</flux:text>
     </div>
     <div class="flex gap-4 items-center">
-        @if ($user->id == auth()->user()->id)
+        @if (auth()->user() && $user->id == auth()->user()->id)
             <flux:checkbox disabled checked label="Admin"/>
             <flux:button disabled variant="danger" iconLeading="trash"/>
         @else
