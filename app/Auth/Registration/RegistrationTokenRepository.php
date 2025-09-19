@@ -64,11 +64,6 @@ class RegistrationTokenRepository
         ];
     }
 
-    public function deleteExisting(string $email): bool
-    {
-        return $this->getTable()->where('email', $email)->delete();
-    }
-
     public function validate(string $email, #[\SensitiveParameter] string $token): Registrant|null
     {
         $record = (array) $this->getTable()->where('email', $email)->first();
@@ -79,7 +74,7 @@ class RegistrationTokenRepository
         return $this->readRecord($record);
     }
 
-    protected function tokenExpired($createdAt)
+    private function tokenExpired($createdAt)
     {
         return Carbon::parse($createdAt)->addHours($this->expires)->isPast();
     }
@@ -87,6 +82,18 @@ class RegistrationTokenRepository
     private function readRecord($record): Registrant
     {
         return new Registrant($record['email'], $record['is_admin']);
+    }
+
+    public function deleteExisting(string $email): bool
+    {
+        return $this->getTable()->where('email', $email)->delete();
+    }
+
+    public function deleteExpired(): void
+    {
+        $expiredAt = Carbon::now()->subHours($this->expires);
+
+        $this->getTable()->where('created_at', '<', $expiredAt)->delete();
     }
 
     private function getTable(): Builder
