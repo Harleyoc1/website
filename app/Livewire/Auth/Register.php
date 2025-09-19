@@ -41,7 +41,7 @@ class Register extends Component
     {
         $registrant = RegistrationTokenRepository::get()->validate($this->email, $this->token);
         if (!$registrant) {
-            $this->addError('Email', 'Token is invalid or expired.');
+            $this->addError('email', 'Token is invalid or expired.');
             return;
         }
 
