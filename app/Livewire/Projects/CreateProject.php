@@ -12,9 +12,10 @@ class CreateProject extends Component
 {
     use WithFileUploads;
 
-    public string $title, $slug, $tools, $summary, $coverImageFilename, $repoLink;
+    public string $title, $slug, $tools, $summary, $coverImageFilename;
+    public string|null $repoLink = null;
     public $coverImage;
-    public bool $standout;
+    public bool $openSource = true, $standout;
 
     protected $rules = [
         'title' => ['required', 'max:255'],
@@ -23,7 +24,7 @@ class CreateProject extends Component
         'coverImage' => ['required', 'image', 'max:1024'],
         'coverImageFilename' => ['required', 'unique:projects,cover_img_filename', 'max:255'],
         'summary' => ['required', 'max:255'],
-        'repoLink' => ['required', 'max:255', 'url']
+        'repoLink' => ['nullable', 'max:255', 'url']
     ];
 
     public function store(): void
@@ -31,6 +32,9 @@ class CreateProject extends Component
         $this->authorize('create', Project::class);
         $this->validate();
         try {
+            if (!$this->openSource) {
+                $this->repoLink = null;
+            }
             Project::writeCoverImage($this->coverImageFilename, $this->coverImage);
             Project::create([
                 'title' => $this->title,
@@ -44,7 +48,6 @@ class CreateProject extends Component
             $this->redirectRoute('management.portfolio.index');
         } catch (Throwable $th) {
             Log::error($th->getMessage());
-            $this->redirectRoute('management.portfolio.index');
             session()->flash('error', $th->getMessage());
         }
     }

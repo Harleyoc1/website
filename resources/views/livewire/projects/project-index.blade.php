@@ -10,7 +10,7 @@
         </div>
         <div id="projects-container" class="space-y-6">
             @foreach($projects as $project)
-                <livewire:projects.project-cell :project="$project" />
+                <livewire:projects.project-cell :project="$project" wire:key="project-cell-{{ $project->id }}" />
             @endforeach
         </div>
     </div>
