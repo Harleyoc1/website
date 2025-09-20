@@ -252,7 +252,35 @@ class CreateProjectTest extends TestCase
             'cover_img_filename' => 'test-img.png',
             'summary' => 'Test summary',
             'repo_link' => 'https://test.link/',
-            'standout' => 1
+            'standout' => true
+        ]);
+    }
+
+    public function test_repo_link_not_set_if_open_source_unchecked(): void
+    {
+        $this->actingAsAdmin();
+
+        $response = Livewire::test(CreateProject::class)
+            ->set('title', 'Test Title')
+            ->set('slug', 'test-slug')
+            ->set('tools', 'Test languages')
+            ->set('coverImage', UploadedFile::fake()->image('test-img.png'))
+            ->set('coverImageFilename', 'test-img.png')
+            ->set('summary', 'Test summary')
+            ->set('repoLink', 'https://test.link/')
+            ->set('openSource', false)
+            ->call('store');
+
+        $response->assertHasNoErrors();
+
+        $this->assertDatabaseHas('projects', [
+            'title' => 'Test Title',
+            'slug' => 'test-slug',
+            'tools' => 'Test languages',
+            'cover_img_filename' => 'test-img.png',
+            'summary' => 'Test summary',
+            'repo_link' => null,
+            'standout' => false
         ]);
     }
 
