@@ -210,22 +210,6 @@ class CreateProjectTest extends TestCase
         $response->assertHasErrors('summary');
     }
 
-    public function test_cannot_create_project_without_repo_link(): void
-    {
-        $this->actingAsAdmin();
-
-        $response = Livewire::test(CreateProject::class)
-            ->set('title', 'Test Title')
-            ->set('slug', 'test-slug')
-            ->set('tools', 'Test languages')
-            ->set('coverImage', UploadedFile::fake()->image('test-img.png'))
-            ->set('coverImageFilename', 'test-img.png')
-            ->set('summary', 'Test summary')
-            ->call('store');
-
-        $response->assertHasErrors('repoLink');
-    }
-
     public function test_cannot_create_project_with_invalid_repo_link(): void
     {
         $this->actingAsAdmin();

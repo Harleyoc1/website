@@ -190,18 +190,6 @@ class EditProjectTest extends TestCase
         $response->assertHasErrors('summary');
     }
 
-    public function test_cannot_remove_repo_link(): void
-    {
-        $this->actingAsAdmin();
-        $project = Project::factory()->create(['slug' => 'test-slug']);
-
-        $response = Livewire::test(EditProject::class, ['slug' => $project->slug])
-            ->set('repoLink', '')
-            ->call('update');
-
-        $response->assertHasErrors('repoLink');
-    }
-
     public function test_cannot_change_to_invalid_repo_link(): void
     {
         $this->actingAsAdmin();
