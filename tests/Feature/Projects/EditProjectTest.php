@@ -190,18 +190,6 @@ class EditProjectTest extends TestCase
         $response->assertHasErrors('summary');
     }
 
-    public function test_cannot_remove_repo_link(): void
-    {
-        $this->actingAsAdmin();
-        $project = Project::factory()->create(['slug' => 'test-slug']);
-
-        $response = Livewire::test(EditProject::class, ['slug' => $project->slug])
-            ->set('repoLink', '')
-            ->call('update');
-
-        $response->assertHasErrors('repoLink');
-    }
-
     public function test_cannot_change_to_invalid_repo_link(): void
     {
         $this->actingAsAdmin();
@@ -246,7 +234,36 @@ class EditProjectTest extends TestCase
             'cover_img_filename' => 'new-test-img.png',
             'summary' => 'New test summary',
             'repo_link' => 'https://test.link/new',
-            'standout' => 0
+            'standout' => false
+        ]);
+    }
+
+    public function test_repo_link_removed_when_open_source_unchecked(): void
+    {
+        $this->actingAsAdmin();
+        $project = Project::factory()->create([
+            'title' => 'Test Title',
+            'slug' => 'test-slug',
+            'tools' => 'Test languages',
+            'cover_img_filename' => 'test-img.png',
+            'summary' => 'Test Summary',
+            'repo_link' => 'https://test.link/',
+            'standout' => false
+        ]);
+
+        Livewire::test(EditProject::class, ['slug' => $project->slug])
+            ->set('openSource', false)
+            ->call('update')
+            ->assertHasNoErrors();
+
+        $this->assertDatabaseHas('projects', [
+            'title' => 'Test Title',
+            'slug' => 'test-slug',
+            'tools' => 'Test languages',
+            'cover_img_filename' => 'test-img.png',
+            'summary' => 'Test Summary',
+            'repo_link' => null,
+            'standout' => false
         ]);
     }
 

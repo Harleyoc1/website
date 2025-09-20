@@ -18,9 +18,16 @@
             </div>
         </div>
 
-        <flux:input wire:model="repoLink" :label="__('Repository Link')" type="text" />
+        <flux:checkbox wire:model="openSource" :label="__('Open Source')"/>
 
-        <flux:checkbox wire:model="standout" :label="__('Standout?')" />
+        <div wire:show="openSource">
+            <flux:input wire:model="repoLink" :label="__('Repository Link')" type="text" />
+        </div>
+
+        <div class="space-y-2">
+            <flux:checkbox wire:model="standout" :label="__('Standout')"/>
+            <flux:text>Standout projects are displayed on the home page and appear larger than standard projects on the portfolio page.</flux:text>
+        </div>
 
         <div class="flex items-center justify-between gap-2">
             <flux:button iconLeading="arrow-left" href="{{ route('management.portfolio.index') }}" class="hover:cursor-pointer">{{ __('Cancel') }}</flux:button>

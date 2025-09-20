@@ -210,22 +210,6 @@ class CreateProjectTest extends TestCase
         $response->assertHasErrors('summary');
     }
 
-    public function test_cannot_create_project_without_repo_link(): void
-    {
-        $this->actingAsAdmin();
-
-        $response = Livewire::test(CreateProject::class)
-            ->set('title', 'Test Title')
-            ->set('slug', 'test-slug')
-            ->set('tools', 'Test languages')
-            ->set('coverImage', UploadedFile::fake()->image('test-img.png'))
-            ->set('coverImageFilename', 'test-img.png')
-            ->set('summary', 'Test summary')
-            ->call('store');
-
-        $response->assertHasErrors('repoLink');
-    }
-
     public function test_cannot_create_project_with_invalid_repo_link(): void
     {
         $this->actingAsAdmin();
@@ -268,7 +252,35 @@ class CreateProjectTest extends TestCase
             'cover_img_filename' => 'test-img.png',
             'summary' => 'Test summary',
             'repo_link' => 'https://test.link/',
-            'standout' => 1
+            'standout' => true
+        ]);
+    }
+
+    public function test_repo_link_not_set_if_open_source_unchecked(): void
+    {
+        $this->actingAsAdmin();
+
+        $response = Livewire::test(CreateProject::class)
+            ->set('title', 'Test Title')
+            ->set('slug', 'test-slug')
+            ->set('tools', 'Test languages')
+            ->set('coverImage', UploadedFile::fake()->image('test-img.png'))
+            ->set('coverImageFilename', 'test-img.png')
+            ->set('summary', 'Test summary')
+            ->set('repoLink', 'https://test.link/')
+            ->set('openSource', false)
+            ->call('store');
+
+        $response->assertHasNoErrors();
+
+        $this->assertDatabaseHas('projects', [
+            'title' => 'Test Title',
+            'slug' => 'test-slug',
+            'tools' => 'Test languages',
+            'cover_img_filename' => 'test-img.png',
+            'summary' => 'Test summary',
+            'repo_link' => null,
+            'standout' => false
         ]);
     }
 

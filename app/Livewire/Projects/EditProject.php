@@ -15,9 +15,10 @@ class EditProject extends Component
     use WithFileUploads;
 
     public Project $project;
-    public string $title, $slug, $tools, $summary, $coverImageFilename, $repoLink;
+    public string $title, $slug, $tools, $summary, $coverImageFilename;
+    public string|null $repoLink = null;
     public $coverImage;
-    public bool $standout;
+    public bool $openSource, $standout;
 
     protected $rules = [
         'title' => ['required', 'max:255'],
@@ -26,7 +27,7 @@ class EditProject extends Component
         'coverImage' => ['nullable', 'image', 'max:1024'],
         'coverImageFilename' => ['required', 'unique:projects,cover_img_filename', 'max:255'],
         'summary' => ['required', 'max:255'],
-        'repoLink' => ['required', 'max:255', 'url']
+        'repoLink' => ['nullable', 'max:255', 'url']
     ];
 
     public function mount(string $slug): void
@@ -41,6 +42,7 @@ class EditProject extends Component
         $this->tools = $this->project->tools;
         $this->summary = $this->project->summary;
         $this->coverImageFilename = $this->project->cover_img_filename;
+        $this->openSource = $this->project->repo_link != null;
         $this->repoLink = $this->project->repo_link;
         $this->standout = $this->project->standout == '1';
     }
@@ -50,6 +52,9 @@ class EditProject extends Component
         $this->authorize('update', $this->project);
         $this->validate($this->rules());
         try {
+            if (!$this->openSource) {
+                $this->repoLink = null;
+            }
             $this->project->updateCoverImage($this->coverImageFilename, $this->coverImage);
             $this->project->update([
                 'title' => $this->title,
