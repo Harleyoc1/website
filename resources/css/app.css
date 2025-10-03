@@ -92,6 +92,11 @@ select:focus[data-flux-control] {
     width: calc(var(--spacing) * 128);
 }
 
+.text-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+}
+
 #blog-body-container {
     overflow: hidden;
 

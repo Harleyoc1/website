@@ -22,24 +22,7 @@
             <div class="masonry-sizer w-[50%]! md:w-[33.3333%]!"></div>
             @foreach($projects as $project)
                 <div @class(['project', 'w-[50%]! md:w-[33.3333%]!' => !$project->standout, 'w-full! md:w-[66.6666%]!' => $project->standout])>
-                    <article class="m-1 px-5 py-6 border border-divider rounded-lg">
-                        <div class="flex justify-between items-center gap-2">
-                            <flux:heading class="text-xl mb-0.5!">{{ $project->title }}</flux:heading>
-                            @if($project->repo_link != null)
-                                <a href="{{ $project->repo_link }}" target="_blank">
-                                    <img src="/images/brands/github-mark.png" alt="GitHub Icon" class="h-6 dark:hidden" />
-                                    <img src="/images/brands/github-mark-white.png" alt="GitHub Icon" class="h-6 hidden dark:block" />
-                                </a>
-                            @else
-                                <flux:text size="sm" class="uppercase text-zinc-500">Closed source</flux:text>
-                            @endif
-                        </div>
-                        <flux:subheading size="md" class="mt-1.5 text-zinc-700 dark:text-zinc-50">{{ $project->summary }}</flux:subheading>
-                        <img src="{{ $project->getCoverImagePath() }}" alt="Cover image" class="my-3 w-full"/>
-                        <flux:subheading size="md" class="mt-1.5 uppercase text-zinc-400">
-                            {{ str_replace(', ', ' | ', $project->tools) }}
-                        </flux:subheading>
-                    </article>
+                    <livewire:portfolio.project-cell :project="$project"/>
                 </div>
             @endforeach
         </div>

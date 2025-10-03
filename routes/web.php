@@ -3,6 +3,7 @@
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Livewire\Blog\BlogIndex;
 use App\Livewire\Blog\ShowPost;
+use App\Livewire\Home;
 use App\Livewire\Portfolio\PortfolioIndex;
 use App\Livewire\Posts\CreatePost;
 use App\Livewire\Posts\EditPost;
@@ -17,9 +18,7 @@ use App\Livewire\Users\UserIndex;
 use App\Mail\Registration;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', Home::class)->name('home');
 
 Route::get('blog', BlogIndex::class)->name('blog.index');
 Route::get('blog/{slug}', ShowPost::class)->name('blog.show');
