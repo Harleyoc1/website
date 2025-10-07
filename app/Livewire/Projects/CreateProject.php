@@ -23,7 +23,7 @@ class CreateProject extends Component
         'tools' => ['required', 'max:255'],
         'coverImage' => ['required', 'image', 'max:1024'],
         'coverImageFilename' => ['required', 'unique:projects,cover_img_filename', 'max:255'],
-        'summary' => ['required', 'max:255'],
+        'summary' => ['required'],
         'repoLink' => ['nullable', 'max:255', 'url']
     ];
 

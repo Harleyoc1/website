@@ -26,7 +26,7 @@ class EditProject extends Component
         'tools' => ['required', 'max:255'],
         'coverImage' => ['nullable', 'image', 'max:1024'],
         'coverImageFilename' => ['required', 'unique:projects,cover_img_filename', 'max:255'],
-        'summary' => ['required', 'max:255'],
+        'summary' => ['required'],
         'repoLink' => ['nullable', 'max:255', 'url']
     ];
 
