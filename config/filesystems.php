@@ -62,12 +62,14 @@ return [
 
         'blog' => [
             'driver' => 'local',
-            'root' => public_path() . '/blog-data'
+            'root' => public_path() . '/blog-data',
+            'visibility' => 'public'
         ],
 
         'portfolio' => [
             'driver' => 'local',
-            'root' => public_path() . '/portfolio-data'
+            'root' => public_path() . '/portfolio-data',
+            'visibility' => 'public'
         ],
 
     ],
