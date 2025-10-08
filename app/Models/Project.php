@@ -22,7 +22,8 @@ class Project extends Model
         'cover_img_filename',
         'summary',
         'repo_link',
-        'standout'
+        'standout',
+        'order_index'
     ];
 
     public function getCoverImagePath(): string

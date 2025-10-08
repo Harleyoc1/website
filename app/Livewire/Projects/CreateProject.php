@@ -36,6 +36,7 @@ class CreateProject extends Component
                 $this->repoLink = null;
             }
             Project::writeCoverImage($this->coverImageFilename, $this->coverImage);
+            $orderIndex = Project::max('order_index') + 1;
             Project::create([
                 'title' => $this->title,
                 'slug' => $this->slug,
@@ -43,7 +44,8 @@ class CreateProject extends Component
                 'summary' => $this->summary,
                 'cover_img_filename' => $this->coverImageFilename,
                 'repo_link' => $this->repoLink,
-                'standout' => $this->standout ?? 0
+                'standout' => $this->standout ?? 0,
+                'order_index' => $orderIndex
             ]);
             $this->redirectRoute('management.portfolio.index');
         } catch (Throwable $th) {
