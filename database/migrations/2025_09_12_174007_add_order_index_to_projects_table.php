@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared('DROP TRIGGER set_order');
+        DB::unprepared('DROP TRIGGER IF EXISTS set_order');
         Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn('order_index');
         });

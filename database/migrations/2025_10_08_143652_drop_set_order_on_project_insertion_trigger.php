@@ -9,7 +9,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::unprepared('DROP TRIGGER set_order');
+        DB::unprepared('DROP TRIGGER IF EXISTS set_order');
     }
 
     /**
