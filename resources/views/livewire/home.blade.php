@@ -1,5 +1,5 @@
 <div class="flex justify-center h-full">
-    <div class="mt-10 mx-5 py-6 md:py-8 lg:py-12 lg:mx-10 xl:mx-auto w-full max-w-6xl
+    <div class="sm:mt-5 sm:mx-2 md:mt-10 md:mx-5 py-6 md:py-8 lg:py-12 lg:mx-10 xl:mx-auto w-full max-w-6xl
                 relative rounded-md border bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-600">
         <div class="px-5 md:px-10 lg:px-15 border-b border-divider h-auto md:h-120 lg:h-116">
             <img src="/images/profile-cutout.png" alt="Cutout of Harley O'Connor" class="hidden md:block float-right md:h-120 lg:h-116" style="shape-margin: 4rem; shape-outside: url({{ '"' . asset('/images/profile-cutout-shape.png') . '"' }});" />
