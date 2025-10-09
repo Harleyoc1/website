@@ -36,13 +36,14 @@ class CreatePost extends Component
             ]);
 
             if (!$post->writeContent($this->content)) {
+                $this->redirectRoute('management.blog.index');
                 session()->flash('error', 'Server error writing post content to file');
             } else {
+                $this->dispatch('uploadAttachments', 'blog', $post->getAttachmentsPath())
+                    ->to(AttachmentManager::class);
+                $this->redirectRoute('management.blog.index');
                 session()->flash('success', 'Post created successfully');
             }
-            $this->dispatch('uploadAttachments', 'blog', $post->getAttachmentsPath())
-                ->to(AttachmentManager::class);
-            $this->redirectRoute('management.blog.index');
         } catch (Throwable $th) {
             session()->flash('error', $th->getMessage());
         }

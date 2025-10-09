@@ -1,30 +1,19 @@
 <div>
-    <div>
-        <div class="flex items-center justify-between gap-2 mb-4">
-            <flux:heading size="xl">Manage projects</flux:heading>
-            <div class="flex gap-2">
-                <flux:button iconLeading="eye" href="{{ route('portfolio.index') }}" class="hover:cursor-pointer">View</flux:button>
-                <flux:button iconLeading="bookmark" onclick="saveOrder()" id="saveOrderButton" class="hover:cursor-pointer" disabled>Save Order</flux:button>
-                <flux:button iconLeading="plus" variant="primary" href="{{ route('management.portfolio.create') }}" class="hover:cursor-pointer">Add</flux:button>
-            </div>
-        </div>
-        <div id="projects-container" class="space-y-6">
-            @foreach($projects as $project)
-                <livewire:projects.project-cell :project="$project" wire:key="project-cell-{{ $project->id }}" />
-            @endforeach
+    <div class="flex items-center justify-between gap-2 mb-4">
+        <flux:heading size="xl">Manage projects</flux:heading>
+        <div class="flex gap-2">
+            <flux:button iconLeading="eye" href="{{ route('portfolio.index') }}" class="hover:cursor-pointer">View</flux:button>
+            <flux:button iconLeading="bookmark" onclick="saveOrder()" id="saveOrderButton" class="hover:cursor-pointer" disabled>Save Order</flux:button>
+            <flux:button iconLeading="plus" variant="primary" href="{{ route('management.portfolio.create') }}" class="hover:cursor-pointer">Add</flux:button>
         </div>
     </div>
-    <div class="flex flex-col items-center">
-        @if (session()->has('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @elseif(session()->has('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
+    <div id="projects-container" class="space-y-6">
+        @foreach($projects as $project)
+            <livewire:projects.project-cell :project="$project" wire:key="project-cell-{{ $project->id }}" />
+        @endforeach
     </div>
+    <x-flash-success-error/>
+
     <script src="https://SortableJS.github.io/Sortable/Sortable.js"></script>
     <script>
         let initialOrdering = getOrdering();

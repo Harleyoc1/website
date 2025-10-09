@@ -18,17 +18,7 @@
         </div>
     </form>
 
-    <div class="flex flex-col items-center mt-6">
-        @if (session()->has('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @elseif(session()->has('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-    </div>
+    <x-flash-success-error/>
 
     <script>
         let filenameField = document.getElementById('filename');

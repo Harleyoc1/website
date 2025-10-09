@@ -19,4 +19,5 @@
     <livewire:attachments.attachment-manager :subheading="__('Attachments are not saved until the blog post is added.')"
         :attachment-writer="new \App\Attachments\BufferedAttachmentWriter()"
         :path="'/blog-data/' . $id . '/attachments/'" />
+    <x-flash-success-error/>
 </div>

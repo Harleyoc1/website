@@ -29,6 +29,10 @@ class AttachmentManager extends Component
             $this->addError('attachmentName', 'Name is taken');
             return;
         }
+        if (!$this->attachment) {
+            $this->addError('attachment', 'File is null');
+            return;
+        }
         $this->attachmentWriter->add($this->attachmentName, $this->attachment);
         $this->attachmentName = '';
         $this->attachment = '';

@@ -13,13 +13,8 @@
             <livewire:users.user-cell :user="$user" wire:key="user-cell-{{ $user->id }}"/>
         @endforeach
     </div>
-    <div class="mt-6 flex justify-center">
-        @if (session()->has('success'))
-            <flux:text class="py-2 px-3 rounded-lg bg-green-500 text-zinc-50 shadow-sm shadow-green-500">
-                Registration link sent!
-            </flux:text>
-        @endif
-    </div>
+    <x-flash-message key="success" class="flash-success" message="Registration link sent!"/>
+
     <flux:modal name="addUser" wire:model.self="showAddUserModel" focusable class="max-w-2xl">
         <form wire:submit="add" class="space-y-6">
             <flux:heading size="lg">{{ __("Add user") }}</flux:heading>

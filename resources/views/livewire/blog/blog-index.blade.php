@@ -1,7 +1,6 @@
 <div class="flex justify-center h-full">
-    <div class="flex flex-col lg:block mt-10 w-full max-w-6xl
-                    relative mx-5 lg:mx-10 xl:mx-auto px-10 py-8 rounded-md border
-                    bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-600">
+    <div class="sm:mt-5 sm:mx-2 md:mt-10 md:mx-5 py-6 md:py-8 px-5 md:px-10 lg:mx-10 xl:mx-auto w-full max-w-6xl
+                relative rounded-md border bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-600">
         @isAdmin
         <div id="admin-panel" class="flex justify-between items-center pb-1 mb-3 w-full border-b border-b-divider">
             <flux:subheading size="sm" class="text-zinc-400 uppercase">Admin</flux:subheading>

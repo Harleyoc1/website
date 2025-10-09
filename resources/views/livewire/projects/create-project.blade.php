@@ -34,6 +34,7 @@
             <flux:button iconLeading="plus" variant="primary" type="submit" class="hover:cursor-pointer">{{ __('Add') }}</flux:button>
         </div>
     </form>
+    <x-flash-success-error/>
 
     <script>
         let filenameField = document.getElementById('filenameInput');
