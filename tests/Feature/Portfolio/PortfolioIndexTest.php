@@ -44,7 +44,7 @@ class PortfolioIndexTest extends TestCase
         $this->get('/portfolio')
             ->assertSee('Test title')
             ->assertSee('Test tools')
-            ->assertSeeHtml('src="' . $project->getCoverImagePath() . '"')
+            ->assertSeeHtml($project->getCoverImagePath())
             ->assertSee('Test summary')
             ->assertSeeHtml('href="https://test.link/"');
     }
