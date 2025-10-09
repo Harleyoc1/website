@@ -1,6 +1,6 @@
 <article class="flex border-b border-b-divider pb-4 gap-2 justify-between" project-id="{{ $project->id }}">
     <div class="flex gap-4">
-        <img src="{{ $project->getCoverImagePath() }}" alt="Cover image" class="h-20 drop-shadow-xl" />
+        <img src="{{ asset($project->getCoverImagePath()) }}" alt="Cover image" class="h-20 drop-shadow-xl" />
         <div class="flex justify-center flex-col">
             <flux:subheading size="lg" class="font-semibold text-gray-800 dark:text-zinc-100">
                 <a href="" class="hover:underline">{{ $project->title }}</a>

@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <img src="{{ $project->getCoverImagePath() }}" alt="Cover image" class="w-50" />
+        <img src="{{ asset($project->getCoverImagePath()) }}" alt="Cover image" class="w-50" />
 
         <flux:checkbox wire:model="openSource" :label="__('Open Source')"/>
 
