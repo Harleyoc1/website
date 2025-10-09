@@ -25,7 +25,7 @@
             <flux:text class="text-sm lg:text-base text-zinc-500 dark:text-zinc-400">
                 A couple of the standout projects I have worked on. For more view my <a href="{{ route('portfolio.index') }}" class="text-link">portfolio page</a>.
             </flux:text>
-            <div class="my-4 space-y-4! [&>*]:mx-0! md:[&>*]:m-0! md:flex md:gap-4 md:[&>*]:w-[50%]">
+            <div class="my-4 space-y-4! [&>*]:mx-0! md:[&>*]:m-0! md:flex md:items-start md:gap-4 md:[&>*]:w-[50%]">
                 @foreach($projects as $project)
                     <livewire:portfolio.project-cell :project="$project"/>
                 @endforeach
