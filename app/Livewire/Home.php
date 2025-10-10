@@ -7,7 +7,7 @@ use App\Models\Project;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('components.layouts.public.page', ['title' => 'Harley O\'Connor'])]
+#[Layout('components.layouts.public.page')]
 class Home extends Component
 {
 

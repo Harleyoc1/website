@@ -7,8 +7,10 @@ use App\Auth\Registration\RegistrationTokenRepository;
 use App\Mail\Registration;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('Manage Users')]
 class UserIndex extends Component
 {
     public $users;

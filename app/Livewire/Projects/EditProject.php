@@ -47,6 +47,11 @@ class EditProject extends Component
         $this->standout = $this->project->standout == '1';
     }
 
+    public function render()
+    {
+        return view('livewire.projects.edit-project')->title('Edit Project \''.$this->title.'\'');
+    }
+
     public function update(): void
     {
         $this->authorize('update', $this->project);

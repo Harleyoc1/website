@@ -4,6 +4,7 @@ namespace App\Livewire\Posts;
 
 use App\Models\Post;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Throwable;
 
@@ -28,6 +29,11 @@ class EditPost extends Component
         $this->slug = $this->post->slug;
         $this->summary = $this->post->summary;
         $this->content = $this->post->readContent() ?? "Unable to read content";
+    }
+
+    public function render()
+    {
+        return view('livewire.posts.edit-post')->title('Edit Post \''.$this->title.'\'');
     }
 
     public function update(): void

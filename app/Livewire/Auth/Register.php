@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('components.layouts.auth', ['title' => 'Register'])]
+#[Title('Register')]
+#[Layout('components.layouts.auth')]
 class Register extends Component
 {
     #[Locked]

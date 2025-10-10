@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use function Livewire\Volt\layout;
 
-#[Layout('components.layouts.auth', ['title' => 'Login'])]
+#[Title('Login')]
+#[Layout('components.layouts.auth')]
 class Login extends Component
 {
     #[Validate('required|string|email')]

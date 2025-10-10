@@ -5,8 +5,10 @@ namespace App\Livewire\Projects;
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('Manage Portfolio')]
 class ProjectIndex extends Component
 {
 

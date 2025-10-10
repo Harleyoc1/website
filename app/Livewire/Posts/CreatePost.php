@@ -4,9 +4,11 @@ namespace App\Livewire\Posts;
 
 use App\Livewire\Attachments\AttachmentManager;
 use App\Models\Post;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Throwable;
 
+#[Title('Create Blog Post')]
 class CreatePost extends Component
 {
 

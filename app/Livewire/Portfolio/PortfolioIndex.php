@@ -4,8 +4,10 @@ namespace App\Livewire\Portfolio;
 
 use App\Models\Project;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('Portfolio')]
 #[Layout('components.layouts.public.page')]
 class PortfolioIndex extends Component
 {

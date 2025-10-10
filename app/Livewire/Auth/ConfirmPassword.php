@@ -5,9 +5,11 @@ namespace App\Livewire\Auth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('components.layouts.auth', ['title' => 'Confirm Password'])]
+#[Title('Confirm Password')]
+#[Layout('components.layouts.auth')]
 class ConfirmPassword extends Component
 {
     public string $password = '';

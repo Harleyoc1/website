@@ -4,10 +4,12 @@ namespace App\Livewire\Auth;
 
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use function Livewire\Volt\layout;
 
-#[Layout('components.layouts.auth', ['title' => 'Forgot Password'])]
+#[Title('Forgot Password')]
+#[Layout('components.layouts.auth')]
 class ForgotPassword extends Component
 {
     public string $email = '';

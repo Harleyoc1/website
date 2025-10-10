@@ -4,10 +4,12 @@ namespace App\Livewire\Projects;
 
 use App\Models\Project;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Throwable;
 
+#[Title('Create Project')]
 class CreateProject extends Component
 {
     use WithFileUploads;
