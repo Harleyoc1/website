@@ -9,7 +9,7 @@
     $class = explode(' ', $class);
 ?>
 
-<div class="absolute left-[50%] transform-[translate(-50%,0)] bottom-5">
+<div class="fixed left-[50%] transform-[translate(-50%,0)] shadow-xl bottom-5">
     @for($i = 0; $i < count($key); $i++)
         @if (session()->has($key[$i]))
             <div class="flash-message {{ $class[$i] }}">
