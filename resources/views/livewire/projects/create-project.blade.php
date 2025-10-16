@@ -9,7 +9,7 @@
 
         <flux:input wire:model="tools" :label="__('Tools')" type="text" />
 
-        <flux:input wire:model="summary" :label="__('Summary')" type="text" />
+        <flux:textarea wire:model="summary" :label="__('Summary')" />
 
         <div class="flex gap-4">
             <flux:input wire:model="coverImage" :label="__('Cover Image')" type="file" onchange="attachmentSelected(this.value)" />
