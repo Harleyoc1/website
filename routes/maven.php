@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Maven\DirectoryIndex;
 use Illuminate\Support\Facades\Route;
 
 function upload_to_maven($file, $path) {
@@ -11,6 +12,8 @@ function upload_to_maven($file, $path) {
     return true;
 }
 
+Route::get('maven/{path?}', DirectoryIndex::class)->where('path', '.*')->name('maven.directory-index');
+
 Route::put('maven/{path}', function ($path) {
     if (!authenticate_http_user()) {
         return response('Unauthorized', 401);
@@ -20,7 +23,7 @@ Route::put('maven/{path}', function ($path) {
     if (!$file) {
         return response('Error reading file', 500);
     }
-    $path = storage_path("maven/$path");
+    $path = Storage::path("repositories/maven/$path");
     // Make relevant directories if they do not already exist
     if (!is_dir($path)) {
         mkdir(substr($path, 0, strrpos($path, '/') + 1), 0755, true);
