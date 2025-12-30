@@ -2,34 +2,36 @@
 
 namespace App\Livewire\Maven;
 
-use Carbon\Carbon;
+use App\Maven\MavenFile;
 use DirectoryIterator;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class DirectoryIndex extends Component
 {
+    public bool $isRoot;
     public string $path;
     public $files = [];
 
     public function mount(?string $path = '')
     {
-        if (!Storage::directoryExists("repositories/maven/$path")) {
-            return redirect(route('maven.directory-index', ''));
+        $this->isRoot = $path == '';
+        $this->path = $path;
+        if (!Storage::directoryExists("maven$path")) {
+            return redirect(route('maven.download', $path));
         }
-        $this->path = Storage::path("repositories/maven/$path");
-        foreach (new DirectoryIterator($this->path) as $file) {
+        $fullPath = Storage::path("maven/$path");
+        foreach (new DirectoryIterator($fullPath) as $file) {
             if ($file->isDot()) continue;
             $path = $file->getRealPath();
-            $fileInfo = ['name' => $file->getFilename(), 'modified' => Carbon::createFromTimestamp(filemtime($path)), 'hash' => is_dir($path) ? '-' : hash_file('sha256', $path)];
-            $this->files[] = $fileInfo;
+            $this->files[] = MavenFile::fromPath($path);
         }
     }
 
     public function render()
     {
         return view('livewire.maven.directory-index')
-            ->layout('components.layouts.public.page')
-            ->title("Index of $this->path | Harley O'Connor Maven");
+            ->layout('components.layouts.public.maven-header')
+            ->title($this->isRoot ? "Index | Maven" : "Index of $this->path | Maven");
     }
 }
