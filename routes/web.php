@@ -49,4 +49,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
-require __DIR__.'/maven.php';
+require_once __DIR__.'/maven.php';
