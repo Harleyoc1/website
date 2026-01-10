@@ -65,6 +65,27 @@ class MavenFile implements Wireable
         return $this->isDir;
     }
 
+    public function getIcon(): string
+    {
+        if ($this->isDir) {
+            return 'folder';
+        }
+
+        $extension = pathinfo($this->name, PATHINFO_EXTENSION);
+
+        switch ($extension) {
+            case 'md5';
+            case 'sha1';
+            case 'sha256';
+            case 'sha512':
+                return 'document-check';
+            case 'jar':
+                return 'command-line';
+        }
+
+        return 'document';
+    }
+
     public function toLivewire()
     {
         return ['name' => $this->name, 'modified' => $this->modified, 'size' => $this->size, 'hash' => $this->hash];

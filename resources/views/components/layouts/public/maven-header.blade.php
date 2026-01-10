@@ -9,9 +9,7 @@
 
             <flux:spacer />
 
-            <div class="dark:bg-white p-1 rounded-md">
-                <img src="{{ asset('images/brands/maven.png') }}" alt="Maven" class="h-6">
-            </div>
+            <flux:heading size="xl" class="tracking-widest uppercase font-mono">Maven</flux:heading>
         </flux:header>
 
         {{ $slot }}
