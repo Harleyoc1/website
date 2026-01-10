@@ -28,9 +28,5 @@
             // Dispatch input event, as otherwise Livewire does not read the new value
             filenameField.dispatchEvent(new Event('input'));
         }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text.replaceAll(' ', '%20'));
-        }
     </script>
 </div>
