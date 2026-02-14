@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 use Tests\TestCase;
+use const App\Models\ADMIN_LEVEL;
 
 class RegistrationTest extends TestCase
 {
@@ -53,7 +54,7 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
-            'is_admin' => false
+            'permission_level' => 0
         ]);
     }
 
@@ -79,7 +80,7 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
-            'is_admin' => true
+            'permission_level' => ADMIN_LEVEL
         ]);
     }
 }

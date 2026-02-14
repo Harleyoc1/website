@@ -26,10 +26,13 @@ Route::get('maven{path?}', DirectoryIndex::class)
     ->name('maven.directory-index');
 
 // route used by publishing plugin to upload maven files
-// TODO: permissions for maven publishing
 Route::put('maven/{path}', function ($path) {
-    if (!authenticate_http_user()) {
+    $user = authenticated_http_user();
+    if (!$user) {
         return response('Unauthorized', 401);
+    }
+    if (!$user->isMavenEditor()) {
+        return response('Forbidden', 403);
     }
     // Get the file from the put request
     $file = fopen('php://input', 'r');

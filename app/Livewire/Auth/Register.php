@@ -12,6 +12,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use const App\Models\ADMIN_LEVEL;
 
 #[Title('Register')]
 #[Layout('components.layouts.auth')]
@@ -61,7 +62,7 @@ class Register extends Component
         $user->markEmailAsVerified();
 
         if ($registrant->isAdmin()) {
-            $user->is_admin = true;
+            $user->permission_level = ADMIN_LEVEL;
             $user->save();
         }
         RegistrationTokenRepository::get()->deleteExisting($this->email);

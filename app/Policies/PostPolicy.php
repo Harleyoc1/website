@@ -33,7 +33,7 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 
     /**
@@ -41,7 +41,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 
     /**
@@ -49,6 +49,6 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Project;
 use App\Models\User;
+use const App\Models\ADMIN_LEVEL;
 
 /**
  * Project policy is quite simple at the moment: any users can view any projects, and admins can use any CRUD
@@ -32,7 +33,7 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 
     /**
@@ -40,7 +41,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 
     /**
@@ -48,6 +49,6 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 }

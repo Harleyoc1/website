@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use const App\Models\ADMIN_LEVEL;
 
 class IsAdminMiddleware
 {
@@ -15,7 +16,7 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->is_admin) {
+        if (auth()->check() && auth()->user()->isAdmin()) {
             return $next($request);
         }
         abort(Response::HTTP_FORBIDDEN);
