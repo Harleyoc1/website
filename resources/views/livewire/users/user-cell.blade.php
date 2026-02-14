@@ -1,3 +1,4 @@
+@php use const App\Models\PERMISSION_LEVEL_DISPLAY_NAMES; @endphp
 <article class="flex items-center justify-between border-b border-b-divider gap-4 py-4">
     <div>
         <flux:heading size="l">{{ $user->name }}</flux:heading>
@@ -8,11 +9,11 @@
             <flux:text>(you)</flux:text>
         @else
             <flux:dropdown>
-                <flux:button icon:trailing="chevron-down">{{ $permissionLevelNames[$permissionLevel] }}</flux:button>
+                <flux:button icon:trailing="chevron-down">{{ PERMISSION_LEVEL_DISPLAY_NAMES[$permissionLevel] }}</flux:button>
                 <flux:menu>
                     <flux:menu.radio.group wire:model="permissionLevel" wire:change="updatePermissionLevel">
-                        @for($i = 0; $i < sizeof($permissionLevelNames); $i++)
-                            <flux:menu.radio value="{{ $i }}">{{ $permissionLevelNames[$i] }}</flux:menu.radio>
+                        @for($i = 0; $i < sizeof(PERMISSION_LEVEL_DISPLAY_NAMES); $i++)
+                            <flux:menu.radio value="{{ $i }}">{{ PERMISSION_LEVEL_DISPLAY_NAMES[$i] }}</flux:menu.radio>
                         @endfor
                     </flux:menu.radio.group>
                 </flux:menu>

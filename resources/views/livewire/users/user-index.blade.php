@@ -1,3 +1,4 @@
+@php use const App\Models\PERMISSION_LEVEL_DISPLAY_NAMES; @endphp
 <div>
     <div class="flex justify-between gap-2">
         <flux:heading size="xl">Manage users</flux:heading>
@@ -21,7 +22,18 @@
 
             <flux:input wire:model="newUserEmail" :label="__('Email')" type="email"/>
 
-            <flux:checkbox wire:model="newUserIsAdmin" :label="__('Admin')"/>
+            <flux:dropdown >
+                <flux:button icon:trailing="chevron-down" class="mb-6">
+                    {{ PERMISSION_LEVEL_DISPLAY_NAMES[$newUserPermissionLevel] }}
+                </flux:button>
+                <flux:menu>
+                    <flux:menu.radio.group wire:model.live="newUserPermissionLevel">
+                        @for($i = 0; $i < sizeof(PERMISSION_LEVEL_DISPLAY_NAMES); $i++)
+                            <flux:menu.radio value="{{ $i }}">{{ PERMISSION_LEVEL_DISPLAY_NAMES[$i] }}</flux:menu.radio>
+                        @endfor
+                    </flux:menu.radio.group>
+                </flux:menu>
+            </flux:dropdown>
 
             <div class="flex space-x-2 rtl:space-x-reverse">
                 <flux:modal.close>

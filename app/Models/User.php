@@ -12,6 +12,8 @@ const ADMIN_LEVEL = 2;
 const MAVEN_EDITOR_LEVEL = 1;
 const USER_LEVEL = 0;
 
+const PERMISSION_LEVEL_DISPLAY_NAMES = ['User', 'Maven Editor', 'Admin'];
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

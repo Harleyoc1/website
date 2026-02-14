@@ -9,9 +9,6 @@ use const App\Models\MAVEN_EDITOR_LEVEL;
 
 class UserCell extends Component
 {
-    public array $permissionLevelNames = [
-        'User', 'Maven Editor', 'Admin'
-    ];
 
     public User $user;
     public int $permissionLevel;

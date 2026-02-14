@@ -4,7 +4,6 @@ namespace Tests\Feature\Auth;
 
 use App\Livewire\Auth\Register;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
@@ -36,7 +35,7 @@ class RegistrationTest extends TestCase
     {
         DB::table('registration_tokens')->insert([
             'email' => 'test@email.com',
-            'is_admin' => false,
+            'permission_level' => 0,
             'token' => Hash::make('test-token'),
             'created_at' => now()
         ]);
@@ -62,7 +61,7 @@ class RegistrationTest extends TestCase
     {
         DB::table('registration_tokens')->insert([
             'email' => 'test@email.com',
-            'is_admin' => true,
+            'permission_level' => ADMIN_LEVEL,
             'token' => Hash::make('test-token'),
             'created_at' => now()
         ]);
