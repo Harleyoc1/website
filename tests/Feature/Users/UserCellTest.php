@@ -18,7 +18,7 @@ class UserCellTest extends TestCase
         $user = User::factory()->create();
 
         Livewire::test(UserCell::class, ['user' => $user])
-            ->set('permission_level', true)
+            ->set('permissionLevel', true)
             ->call('updatePermissionLevel')
             ->assertForbidden();
 
@@ -34,7 +34,7 @@ class UserCellTest extends TestCase
         $user = User::factory()->create();
 
         Livewire::test(UserCell::class, ['user' => $user])
-            ->set('permission_level', true)
+            ->set('permissionLevel', true)
             ->call('updatePermissionLevel')
             ->assertForbidden();
 
@@ -50,7 +50,7 @@ class UserCellTest extends TestCase
         $user = User::factory()->create();
 
         Livewire::test(UserCell::class, ['user' => $user])
-            ->set('permission_level', ADMIN_LEVEL)
+            ->set('permissionLevel', ADMIN_LEVEL)
             ->call('updatePermissionLevel')
             ->assertHasNoErrors();
 
