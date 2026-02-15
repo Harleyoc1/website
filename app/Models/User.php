@@ -65,6 +65,10 @@ class User extends Authenticatable
             ->implode('');
     }
 
+    public function hasPermission(int $level) {
+        return $this->permission_level >= $level;
+    }
+
     public function isMavenEditor(): bool
     {
         return $this->permission_level >= MAVEN_EDITOR_LEVEL;

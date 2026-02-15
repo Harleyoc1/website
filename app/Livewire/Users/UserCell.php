@@ -4,8 +4,6 @@ namespace App\Livewire\Users;
 
 use App\Models\User;
 use Livewire\Component;
-use const App\Models\ADMIN_LEVEL;
-use const App\Models\MAVEN_EDITOR_LEVEL;
 
 class UserCell extends Component
 {

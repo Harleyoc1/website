@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\IsAdminMiddleware;
 use App\Livewire\Blog\BlogIndex;
 use App\Livewire\Blog\ShowPost;
 use App\Livewire\Home;
@@ -32,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
-    Route::middleware(IsAdminMiddleware::class)->group(function () {
+    Route::middleware(['admin_auth'])->group(function () {
         Route::view('management', 'private.dashboard')->name('dashboard');
         Route::get('management/portfolio', ProjectIndex::class)->name('management.portfolio.index');
         Route::get('management/portfolio/create', CreateProject::class)->name('management.portfolio.create');
@@ -49,4 +48,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
-require_once __DIR__.'/maven.php';
+require __DIR__.'/maven.php';

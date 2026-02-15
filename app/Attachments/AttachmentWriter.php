@@ -2,7 +2,6 @@
 
 namespace App\Attachments;
 
-use Illuminate\Http\UploadedFile;
 use Livewire\Wireable;
 
 interface AttachmentWriter extends Wireable

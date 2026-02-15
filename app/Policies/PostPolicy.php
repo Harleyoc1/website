@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 /**
  * Post policy is quite simple at the moment: any users can view any posts, and admins can use any CRUD operation on

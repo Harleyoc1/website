@@ -28,6 +28,12 @@ abstract class TestCase extends BaseTestCase
         return $this;
     }
 
+    protected function actingAsMavenEditor(): TestCase
+    {
+        $this->actingAs(User::factory()->mavenEditor()->create());
+        return $this;
+    }
+
     protected function actingAsAdmin(): TestCase
     {
         $this->actingAs(User::factory()->admin()->create());

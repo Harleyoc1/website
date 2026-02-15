@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Project;
 use App\Models\User;
-use const App\Models\ADMIN_LEVEL;
 
 /**
  * Project policy is quite simple at the moment: any users can view any projects, and admins can use any CRUD

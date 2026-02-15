@@ -72,6 +72,12 @@ return [
             'visibility' => 'public'
         ],
 
+        'maven' => [
+            'driver' => 'local',
+            'root' => storage_path('maven'),
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

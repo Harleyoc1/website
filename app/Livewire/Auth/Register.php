@@ -12,7 +12,6 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use const App\Models\ADMIN_LEVEL;
 use const App\Models\USER_LEVEL;
 
 #[Title('Register')]

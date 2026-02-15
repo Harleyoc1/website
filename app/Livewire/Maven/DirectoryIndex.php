@@ -17,10 +17,13 @@ class DirectoryIndex extends Component
     {
         $this->isRoot = $path == '';
         $this->path = $path;
-        if (!Storage::directoryExists("maven$path")) {
-            return redirect(route('maven.download', $path));
+        if (!Storage::disk('maven')->exists($path)) {
+            abort(404);
         }
-        $fullPath = Storage::path("maven/$path");
+        if (!Storage::disk('maven')->directoryExists($path)) {
+            return redirect(route('maven.download', substr($path, 1)));
+        }
+        $fullPath = Storage::disk('maven')->path($path);
         foreach (new DirectoryIterator($fullPath) as $file) {
             if ($file->isDot()) continue;
             $path = $file->getRealPath();

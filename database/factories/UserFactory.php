@@ -5,6 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use const App\Models\ADMIN_LEVEL;
+use const App\Models\MAVEN_EDITOR_LEVEL;
+use const App\Models\USER_LEVEL;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -46,14 +49,21 @@ class UserFactory extends Factory
     public function mavenUser(): static
     {
         return $this->state(fn (array $attributes) => [
-            'permission_level' => 1,
+            'permission_level' => USER_LEVEL,
+        ]);
+    }
+
+    public function mavenEditor()
+    {
+        return $this->static(fn (array $attributes) => [
+            'permission_level' => MAVEN_EDITOR_LEVEL,
         ]);
     }
 
     public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'permission_level' => 2,
+            'permission_level' => ADMIN_LEVEL,
         ]);
     }
 }

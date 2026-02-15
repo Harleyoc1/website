@@ -1,14 +1,13 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\UploadedFile;
 
-function authenticated_http_user(): User|false {
-    $username = $_SERVER['PHP_AUTH_USER'];
-    $password = $_SERVER['PHP_AUTH_PW'];
-    $user = User::where('email', $username)->first();
-    if (isset($user) and Hash::check($password, $user->password)) {
-        return $user;
+function upload_to_maven($file, $path) {
+    $upload = fopen($path, 'w');
+    $contents = $file instanceof UploadedFile ? $file->getContent() : stream_get_contents($file);
+    if (!$upload || !fwrite($upload, $contents)) {
+        return false;
     }
-    return false;
+    fclose($upload);
+    return true;
 }
