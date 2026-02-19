@@ -3,7 +3,6 @@
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Livewire\Component;

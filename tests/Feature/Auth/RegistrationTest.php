@@ -4,11 +4,12 @@ namespace Tests\Feature\Auth;
 
 use App\Livewire\Auth\Register;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 use Tests\TestCase;
+use const App\Models\ADMIN_LEVEL;
+use const App\Models\MAVEN_EDITOR_LEVEL;
 
 class RegistrationTest extends TestCase
 {
@@ -35,7 +36,7 @@ class RegistrationTest extends TestCase
     {
         DB::table('registration_tokens')->insert([
             'email' => 'test@email.com',
-            'is_admin' => false,
+            'permission_level' => 0,
             'token' => Hash::make('test-token'),
             'created_at' => now()
         ]);
@@ -53,7 +54,33 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
-            'is_admin' => false
+            'permission_level' => 0
+        ]);
+    }
+
+    public function test_new_users_granted_maven_editor_when_set(): void
+    {
+        DB::table('registration_tokens')->insert([
+            'email' => 'test@email.com',
+            'permission_level' => MAVEN_EDITOR_LEVEL,
+            'token' => Hash::make('test-token'),
+            'created_at' => now()
+        ]);
+
+        $response = Livewire::withQueryParams(['email' => 'test@email.com'])
+            ->test(Register::class, ['token' => 'test-token'])
+            ->set('name', 'Test User')
+            ->set('password', 'password')
+            ->set('password_confirmation', 'password')
+            ->call('register');
+
+        $response
+            ->assertHasNoErrors()
+            ->assertRedirect(route('dashboard', absolute: false));
+
+        $this->assertAuthenticated();
+        $this->assertDatabaseHas('users', [
+            'permission_level' => MAVEN_EDITOR_LEVEL
         ]);
     }
 
@@ -61,7 +88,7 @@ class RegistrationTest extends TestCase
     {
         DB::table('registration_tokens')->insert([
             'email' => 'test@email.com',
-            'is_admin' => true,
+            'permission_level' => ADMIN_LEVEL,
             'token' => Hash::make('test-token'),
             'created_at' => now()
         ]);
@@ -79,7 +106,7 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
-            'is_admin' => true
+            'permission_level' => ADMIN_LEVEL
         ]);
     }
 }

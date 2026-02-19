@@ -58,7 +58,7 @@ class RegistrationTokenRepository
     {
         return [
             'email' => $registrant->getEmail(),
-            'is_admin' => $registrant->isAdmin(),
+            'permission_level' => $registrant->getPermissionLevel(),
             'token' => Hash::make($token),
             'created_at' => new Carbon
         ];
@@ -81,7 +81,7 @@ class RegistrationTokenRepository
 
     private function readRecord($record): Registrant
     {
-        return new Registrant($record['email'], $record['is_admin']);
+        return new Registrant($record['email'], $record['permission_level']);
     }
 
     public function deleteExisting(string $email): bool

@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
+use const App\Models\ADMIN_LEVEL;
+use const App\Models\MAVEN_EDITOR_LEVEL;
 
 class UserCellTest extends TestCase
 {
@@ -17,13 +19,13 @@ class UserCellTest extends TestCase
         $user = User::factory()->create();
 
         Livewire::test(UserCell::class, ['user' => $user])
-            ->set('isAdmin', true)
-            ->call('updateIsAdmin')
+            ->set('permissionLevel', true)
+            ->call('updatePermissionLevel')
             ->assertForbidden();
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
-            'is_admin' => false,
+            'permission_level' => 0,
         ]);
     }
 
@@ -33,13 +35,29 @@ class UserCellTest extends TestCase
         $user = User::factory()->create();
 
         Livewire::test(UserCell::class, ['user' => $user])
-            ->set('isAdmin', true)
-            ->call('updateIsAdmin')
+            ->set('permissionLevel', true)
+            ->call('updatePermissionLevel')
             ->assertForbidden();
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
-            'is_admin' => false,
+            'permission_level' => 0,
+        ]);
+    }
+
+    public function test_update_maven_editor(): void
+    {
+        $this->actingAsAdmin();
+        $user = User::factory()->create();
+
+        Livewire::test(UserCell::class, ['user' => $user])
+            ->set('permissionLevel', MAVEN_EDITOR_LEVEL)
+            ->call('updatePermissionLevel')
+            ->assertHasNoErrors();
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'permission_level' => MAVEN_EDITOR_LEVEL,
         ]);
     }
 
@@ -49,13 +67,13 @@ class UserCellTest extends TestCase
         $user = User::factory()->create();
 
         Livewire::test(UserCell::class, ['user' => $user])
-            ->set('isAdmin', true)
-            ->call('updateIsAdmin')
+            ->set('permissionLevel', ADMIN_LEVEL)
+            ->call('updatePermissionLevel')
             ->assertHasNoErrors();
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
-            'is_admin' => true,
+            'permission_level' => ADMIN_LEVEL,
         ]);
     }
 

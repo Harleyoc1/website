@@ -6,7 +6,6 @@ use App\Livewire\Blog\ShowPost;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Livewire;
 use Tests\TestCase;
 
 class ShowBlogTest extends TestCase

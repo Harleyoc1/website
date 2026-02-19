@@ -8,6 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
+const ADMIN_LEVEL = 2;
+const MAVEN_EDITOR_LEVEL = 1;
+const USER_LEVEL = 0;
+
+const PERMISSION_LEVEL_DISPLAY_NAMES = ['User', 'Maven Editor', 'Admin'];
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -57,5 +63,19 @@ class User extends Authenticatable
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    public function hasPermission(int $level) {
+        return $this->permission_level >= $level;
+    }
+
+    public function isMavenEditor(): bool
+    {
+        return $this->permission_level >= MAVEN_EDITOR_LEVEL;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->permission_level == ADMIN_LEVEL;
     }
 }

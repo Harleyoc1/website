@@ -4,7 +4,6 @@ namespace App\Livewire\Posts;
 
 use App\Models\Post;
 use Illuminate\Validation\Rule;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Throwable;
 

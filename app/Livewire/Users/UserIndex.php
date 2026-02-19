@@ -16,7 +16,7 @@ class UserIndex extends Component
     public $users;
 
     public string $newUserEmail = '';
-    public bool $newUserIsAdmin = false;
+    public int $newUserPermissionLevel = 0;
 
     public function mount(): void
     {
@@ -29,7 +29,7 @@ class UserIndex extends Component
             'newUserEmail' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class.',email']
         ]);
 
-        $token = RegistrationTokenRepository::get()->create(new Registrant($this->newUserEmail, $this->newUserIsAdmin));
+        $token = RegistrationTokenRepository::get()->create(new Registrant($this->newUserEmail, $this->newUserPermissionLevel));
 
         Mail::to($this->newUserEmail)->send(new Registration($this->newUserEmail, $token));
 
@@ -38,7 +38,7 @@ class UserIndex extends Component
         // Close modal and reset fields
         $this->modal('addUser')->close();
         $this->newUserEmail = '';
-        $this->newUserIsAdmin = false;
+        $this->newUserPermissionLevel = 0;
     }
 
 }

@@ -7,7 +7,7 @@ class Registrant
 
     public function __construct(
         private string $email,
-        private bool $isAdmin
+        private int $permissionLevel
     ) {
     }
 
@@ -16,9 +16,9 @@ class Registrant
         return $this->email;
     }
 
-    public function isAdmin(): bool
+    public function getPermissionLevel(): int
     {
-        return $this->isAdmin;
+        return $this->permissionLevel;
     }
 
 }

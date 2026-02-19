@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 /**
  * Post policy is quite simple at the moment: any users can view any posts, and admins can use any CRUD operation on
@@ -33,7 +32,7 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 
     /**
@@ -41,7 +40,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 
     /**
@@ -49,6 +48,6 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 }

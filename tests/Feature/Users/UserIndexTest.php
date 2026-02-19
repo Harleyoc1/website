@@ -100,7 +100,7 @@ class UserIndexTest extends TestCase
 
         $this->assertDatabaseHas('registration_tokens', [
             'email' => 'test@email.com',
-            'is_admin' => false
+            'permission_level' => 0
         ]);
     }
 

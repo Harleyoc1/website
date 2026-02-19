@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use const App\Models\ADMIN_LEVEL;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Harley O\'Connor',
             'email' => 'admin@harleyoconnor.com',
             'password' => Hash::make($password),
-            'is_admin' => true,
+            'permission_level' => ADMIN_LEVEL,
         ]);
     }
 }

@@ -32,7 +32,7 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 
     /**
@@ -40,7 +40,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 
     /**
@@ -48,6 +48,6 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project): bool
     {
-        return isset($user) && $user->is_admin;
+        return isset($user) && $user->isAdmin();
     }
 }

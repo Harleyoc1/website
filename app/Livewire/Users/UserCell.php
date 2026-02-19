@@ -7,19 +7,20 @@ use Livewire\Component;
 
 class UserCell extends Component
 {
+
     public User $user;
-    public bool $isAdmin;
+    public int $permissionLevel;
 
     public function mount(User $user)
     {
         $this->user = $user;
-        $this->isAdmin = $user->is_admin;
+        $this->permissionLevel = $user->permission_level;
     }
 
-    public function updateIsAdmin(): void
+    public function updatePermissionLevel(): void
     {
         $this->authorize('update', $this->user);
-        $this->user->is_admin = $this->isAdmin;
+        $this->user->permission_level = $this->permissionLevel;
         $this->user->save();
     }
 
